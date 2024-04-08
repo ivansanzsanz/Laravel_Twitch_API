@@ -20,12 +20,6 @@ jobs:
         with:
           php-version: '8.2'
 
-      - name: Install the composer
-        run: composer install
-
-      - name: Update the composer
-        run: composer update
-
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
 
