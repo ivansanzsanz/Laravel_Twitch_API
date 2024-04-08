@@ -7,7 +7,7 @@
     "require": {
         "php": "^8.2",
         "ext-mysqli": "*",
-        "laravel/framework": "^11.1",
+        "laravel/framework": "v11.1",
         "laravel/tinker": "^2.9"
     },
     "require-dev": {
