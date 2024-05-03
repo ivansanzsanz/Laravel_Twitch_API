@@ -21,25 +21,25 @@ return new class extends Migration
             $table->integer('most_viewed_views');
             $table->string('most_viewed_duration', 30);
             $table->string('most_viewed_created_at', 50);
-            $table->dateTime('fecha');
+            $table->dateTime('date');
         });
 
-        Schema::create('users_twitch', function (Blueprint $table){
-            $table->string('id',16)->primary();
-            $table->string('login',64)->nullable();
-            $table->string('display_name',64)->nullable();
-            $table->string('type',64)->nullable();
-            $table->string('broadcaster_type',64)->nullable();
-            $table->string('desciption',1024)->nullable();
-            $table->string('profile_image_url',1024)->nullable();
-            $table->string('offline_image_url',1024)->nullable();
+        Schema::create('users_twitch', function (Blueprint $table) {
+            $table->string('id', 16)->primary();
+            $table->string('login', 64)->nullable();
+            $table->string('display_name', 64)->nullable();
+            $table->string('type', 64)->nullable();
+            $table->string('broadcaster_type', 64)->nullable();
+            $table->string('desciption', 1024)->nullable();
+            $table->string('profile_image_url', 1024)->nullable();
+            $table->string('offline_image_url', 1024)->nullable();
             $table->integer('view_count')->nullable();
-            $table->string('created_at',128)->nullable();
+            $table->string('created_at', 128)->nullable();
         });
 
-        Schema::create('tokens_twitch', function (Blueprint $table){
-            $table->string('user_id',100);
-            $table->string('token',100);
+        Schema::create('tokens_twitch', function (Blueprint $table) {
+            $table->string('user_id', 100);
+            $table->string('token', 100);
             $table->primary(['user_id', 'token']);
         });
     }
