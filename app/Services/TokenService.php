@@ -13,7 +13,7 @@ class TokenService
 
     public function token()
     {
-        $conn = $this->databaseConnection->databaseConnection();
+        $conn = $this->databaseConnection->__construct();
 
         $stmt = $conn->prepare("SELECT * FROM tokens_twitch");
         $stmt->execute();

@@ -34,7 +34,7 @@ class TopsOfTheTopsController extends Controller
     {
         $token = $this->tokenService->token();
         $topThreeGames = $this->topThreeService->top3($token);
-        $conn = $this->databaseConnection->databaseConnection();
+        $conn = $this->databaseConnection->__construct();
 
         $time = $this->setTime($request);
 

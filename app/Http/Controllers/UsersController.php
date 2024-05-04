@@ -21,7 +21,7 @@ class UsersController extends Controller
 
     public function users(Request $request): JsonResponse
     {
-        $conn = $this->databaseConnection->databaseConnection();
+        $conn = $this->databaseConnection->__construct();
 
         $userId = $request->query('id');
 

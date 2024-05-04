@@ -4,18 +4,9 @@ namespace App\Services;
 
 class CurlStreamsService
 {
-    private TokenService $tokenService;
-
-    public function __construct()
-    {
-        $this->tokenService = new TokenService();
-    }
-
-    public function curlStreams()
+    public function curlStreams($access_token)
     {
         $client_id = env('CLIENT_ID');
-
-        $access_token = $this->tokenService->token();
 
         $ch2 = curl_init();
 

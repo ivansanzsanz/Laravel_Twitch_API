@@ -2,40 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\CurlStreamsService;
+use App\Services\GetStreamsService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class StreamsController extends Controller
 {
-    private CurlStreamsService $curlStreamsService;
+    private GetStreamsService $getStreamsService;
 
-    public function __construct()
+    public function __construct(GetStreamsService $getStreamsService)
     {
-        $this->curlStreamsService = new CurlStreamsService();
+        $this->getStreamsService = $getStreamsService;
     }
 
-    public function streams(): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
-        $responseDecoded = $this->curlStreamsService->curlStreams();
+        $streams = $this->getStreamsService->execute();
 
-        $finalResult = $this->resultArray($responseDecoded);
-
-        return response()->json($finalResult);
-    }
-
-    public function resultArray($responseDecoded): array
-    {
-        $result = array();
-
-        foreach ($responseDecoded['data'] as $item) {
-            $result[] = array(
-                'user_name' => $item['user_name'],
-                'title' => $item['title']
-            );
-        }
-
-        return array(
-            'data' => $result
-        );
+        return response()->json($streams);
     }
 }

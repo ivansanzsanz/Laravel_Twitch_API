@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Services\ApiClient;
+use App\Services\GetStreamsService;
+use App\Services\StreamsManager;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +14,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        /*$this->app->bind(ApiClient::class, function ($app) {
+            return new ApiClient();
+        });
+
+        $this->app->bind(StreamsManager::class, function ($app) {
+            return new StreamsManager($app->make(ApiClient::class));
+        });
+
+        $this->app->bind(GetStreamsService::class, function ($app) {
+            return new GetStreamsService($app->make(StreamsManager::class));
+        });*/
     }
 
     /**

@@ -9,8 +9,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/analytics/topsofthetops', [TopsOfTheTopsController::class, 'topsOfTheTops']);
+//Route::get('/analytics/topsofthetops', TopsOfTheTopsController::class);
 
-Route::get('/analytics/users', [UsersController::class, 'users']);
+//Route::get('/analytics/users', UsersController::class);
 
-Route::get('/analytics/streams', [StreamsController::class, 'streams']);
+Route::get('/analytics/streams', StreamsController::class);
