@@ -6,12 +6,13 @@ use App\Services\ApiClient;
 use Spatie\FlareClient\Api;
 use Tests\TestCase;
 
-class StreamsComponentsTests extends TestCase
+class ApiClientTests extends TestCase
 {
     /**
      * @test
      */
-    public function givenApiClientInvalidTokenReturnsInvalidOAuthTokenMessage(){
+    public function givenApiClientInvalidTokenReturnsInvalidOAuthTokenMessage()
+    {
         $apiClient = new ApiClient();
         $url = "https://api.twitch.tv/helix/streams";
         $badToken = "iHateSnickers";
@@ -45,11 +46,11 @@ class StreamsComponentsTests extends TestCase
     /**
      * @test
      */
-    public function givenBadUrlInGetTokenReturnsFalse(){
+    public function givenBadUrlInGetTokenReturnsFalse()
+    {
         $apiClient = new ApiClient();
         $badUrl = "hdfjskl";
         $response = $apiClient->getToken($badUrl);
         $this->assertFalse($response);
     }
-
 }
