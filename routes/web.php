@@ -11,6 +11,6 @@ Route::get('/', function () {
 
 //Route::get('/analytics/topsofthetops', TopsOfTheTopsController::class);
 
-//Route::get('/analytics/users', UsersController::class);
+Route::get('/analytics/users', UsersController::class);
 
 Route::get('/analytics/streams', StreamsController::class);

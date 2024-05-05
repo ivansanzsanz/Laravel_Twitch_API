@@ -2,10 +2,7 @@
 
 namespace App\Services;
 
-use Illuminate\Http\JsonResponse;
-use PhpParser\Node\Scalar\String_;
-
-class StreamsManager
+class UsersManager
 {
     private string $token;
     private ApiClient $apiClient;
@@ -15,9 +12,9 @@ class StreamsManager
         $this->apiClient = $apiClient;
     }
 
-    public function getStreams(): array
+    public function getUserById($userId): array
     {
-        $url = "https://api.twitch.tv/helix/streams";
+        $url = "https://api.twitch.tv/helix/users?id=" . urlencode($userId);
         $this->getTokenTwitch();
 
         $header = array(
@@ -29,7 +26,7 @@ class StreamsManager
         $response = json_decode($response, true);
 
         if (!isset($response['data'])) {
-            echo "Error en la peticion curl de los streams";
+            echo "Error en la peticion curl del user";
             exit;
         }
 

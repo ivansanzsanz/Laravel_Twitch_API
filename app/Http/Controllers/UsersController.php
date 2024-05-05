@@ -2,15 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\CurlUsersService;
-use App\Services\DatabaseConnectionService;
+use App\Http\Requests\UsersRequest;
+use App\Services\GetUsersService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use mysqli_result;
 
 class UsersController extends Controller
 {
-    private CurlUsersService $curlUsersService;
+    private GetUsersService $getUsersService;
+
+    public function __construct(GetUsersService $getUsersService)
+    {
+        $this->getUsersService = $getUsersService;
+    }
+
+    public function __invoke(UsersRequest $request): JsonResponse
+    {
+        $userId = $request->query('id');
+
+        $user = $this->getUsersService->execute($userId);
+
+        return response()->json($user);
+    }
+
+    /*private CurlUsersService $curlUsersService;
     private DatabaseConnectionService $databaseConnection;
 
     public function __construct()
@@ -61,7 +75,7 @@ class UsersController extends Controller
     {
         $newUser = "INSERT INTO users_twitch (id, login, display_name, type,
     broadcaster_type, desciption, profile_image_url, offline_image_url, view_count, created_at)
-	VALUES (?,?,?,?,?,?,?,?,?,?);";
+    VALUES (?,?,?,?,?,?,?,?,?,?);";
         $stmt = $conn->prepare($newUser);
 
         $responseDecoded = $this->curlUsersService->curlUsers($userId);
@@ -86,5 +100,5 @@ class UsersController extends Controller
         $stmt->close();
 
         return $userData;
-    }
+    }*/
 }

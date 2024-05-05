@@ -2,11 +2,10 @@
 
 namespace Tests\Feature;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Services\ApiClient;
 use App\Services\StreamsManager;
-use Mockery;
 use Tests\TestCase;
+use Mockery;
 
 class GetStreamsTest extends TestCase
 {

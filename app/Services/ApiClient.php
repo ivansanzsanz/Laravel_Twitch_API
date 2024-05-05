@@ -4,7 +4,7 @@ namespace App\Services;
 
 class ApiClient
 {
-    public function getToken($url): string
+    public function getToken($url): bool|string
     {
         $client_id = env('CLIENT_ID');
         $client_secret = env('CLIENT_SECRET');
@@ -15,34 +15,21 @@ class ApiClient
             'grant_type' => 'client_credentials'
         );
 
-        //$url = 'https://id.twitch.tv/oauth2/token'
-
         $ch1 = curl_init();
         curl_setopt($ch1, CURLOPT_URL, $url);
         curl_setopt($ch1, CURLOPT_POST, 1);
         curl_setopt($ch1, CURLOPT_POSTFIELDS, http_build_query($post_data));
         curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
-
-        curl_setopt(
-            $ch1,
-            CURLOPT_HTTPHEADER,
-            array(
-                'Content-Type: application/x-www-form-urlencoded'
-            )
-        );
+        curl_setopt($ch1, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
 
         $response1 = curl_exec($ch1);
-
-        if (curl_errno($ch1)) {
-            echo 'Error: ' . curl_error($ch1);
-        }
 
         curl_close($ch1);
 
         return $response1;
     }
 
-    public function makeCurlCall($url, $header)
+    public function makeCurlCall($url, $header): bool|string
     {
         $client_id = env('CLIENT_ID');
 
@@ -55,10 +42,6 @@ class ApiClient
         curl_setopt($ch2, CURLOPT_HTTPHEADER, $header);
 
         $response2 = curl_exec($ch2);
-
-        if (curl_errno($ch2)) {
-            return 'Error: ' . curl_error($ch2);
-        }
 
         curl_close($ch2);
 
