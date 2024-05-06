@@ -3,7 +3,6 @@
 namespace Streams;
 
 use App\Services\ApiClient;
-use Spatie\FlareClient\Api;
 use Tests\TestCase;
 
 class ApiClientTests extends TestCase
