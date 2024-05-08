@@ -2,6 +2,9 @@
 
 namespace Services;
 
+use App\Http\Requests\UsersRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
 class GetUsersServiceTest extends TestCase
@@ -11,7 +14,7 @@ class GetUsersServiceTest extends TestCase
      */
     public function givenAnUserRequestWithAnIdValueReturnsCode200()
     {
-        $response = $this->get('/analytics/users?id=123456789');
+        $response = $this->get('/analytics/users?id=417603922');
 
         $response->assertStatus(200);
     }
@@ -23,7 +26,7 @@ class GetUsersServiceTest extends TestCase
     {
         $response = $this->get('/analytics/users?id=');
 
-        $response->assertStatus(400);
+        $response->assertStatus(302);
     }
 
     /**
