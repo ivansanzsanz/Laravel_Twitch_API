@@ -11,7 +11,7 @@ class GetUsersService
         $this->usersManager = $userManager;
     }
 
-    public function execute($userId)
+    public function execute($userId): array
     {
         $user = $this->usersManager->getUserById($userId);
 

@@ -1,31 +1,23 @@
 <?php
 
-namespace Tests\Feature;
+namespace Services;
 
 use App\Services\ApiClient;
 use App\Services\DatabaseClient;
 use App\Services\UsersManager;
-use Tests\TestCase;
 use Mockery;
+use Tests\TestCase;
 
-class GetUsersTest extends TestCase
+class UsersManagerTest extends TestCase
 {
     /**
      * @test
      */
-    public function getUsers()
+    public function getUserByIdTest()
     {
         $mockery = new Mockery();
         $apiClient = $mockery->mock(ApiClient::class);
         $databaseClient = $mockery->mock(DatabaseClient::class);
-        $this->app
-            ->when(UsersManager::class)
-            ->needs(ApiClient::class)
-            ->give(fn() => $apiClient);
-        $this->app
-            ->when(UsersManager::class)
-            ->needs(DatabaseClient::class)
-            ->give(fn() => $databaseClient);
         $tokenExpected = json_encode([
             'access_token' => 'u308tesk7yzmi8fe7el28e46dad3a5',
             'expires_in' => 5175216,
@@ -78,13 +70,46 @@ class GetUsersTest extends TestCase
             ]]))
             ->once();
 
-        $response = $this->get('/analytics/users?id=123456789');
+        $usersManager = new UsersManager($apiClient, $databaseClient);
+        $result = $usersManager->getUserById('123456789');
 
-        $response->assertStatus(200);
-        $checkStr1 = '[{"id":"123456789","login":"login","display_name":"display_name",';
-        $checkStr2 = '"type":"","broadcaster_type":"","description":"description",';
-        $checkStr3 = '"profile_image_url":"profile_image_url","offline_image_url":"",';
-        $checkStr4 = '"view_count":0,"created_at":"05-05-2024"}]';
-        $response->assertContent($checkStr1 . $checkStr2 . $checkStr3 . $checkStr4);
+        $this->assertEquals($result, array('data' => [[
+            'id' => '123456789',
+            'login' => 'login',
+            'display_name' => 'display_name',
+            'type' => '',
+            'broadcaster_type' => '',
+            'description' => 'description',
+            'profile_image_url' => 'profile_image_url',
+            'offline_image_url' => '',
+            'view_count' => 0,
+            'created_at' => '05-05-2024'
+        ]]));
+    }
+
+    /**
+     * @test
+     */
+    public function getTokenTwitchTest()
+    {
+        $mockery = new Mockery();
+        $apiClient = $mockery->mock(ApiClient::class);
+        $databaseClient = $mockery->mock(DatabaseClient::class);
+        $tokenExpected = json_encode([
+            'access_token' => 'u308tesk7yzmi8fe7el28e46dad3a5',
+            'expires_in' => 5175216,
+            'token_type' => 'bearer',
+        ]);
+
+        $apiClient
+            ->expects('getToken')
+            ->with('https://id.twitch.tv/oauth2/token')
+            ->once()
+            ->andReturn($tokenExpected);
+
+        $usersManager = new UsersManager($apiClient, $databaseClient);
+        $result = $usersManager->getTokenTwitch();
+
+        $this->assertEquals($result, 'u308tesk7yzmi8fe7el28e46dad3a5');
     }
 }

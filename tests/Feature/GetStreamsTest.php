@@ -14,7 +14,8 @@ class GetStreamsTest extends TestCase
      */
     public function getStreams()
     {
-        $apiClient = Mockery::mock(ApiClient::class);
+        $mockery = new Mockery();
+        $apiClient = $mockery->mock(ApiClient::class);
         $this->app
             ->when(StreamsManager::class)
             ->needs(ApiClient::class)

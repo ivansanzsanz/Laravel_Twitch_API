@@ -12,7 +12,7 @@ use App\Services\VideosService;
 use App\Services\TopThreeService;
 use mysqli_result;
 
-class TopsOfTheTopsController extends Controller
+class GetTopsOfTheTopsController extends Controller
 {
     private TokenService $tokenService;
     private TopThreeService $topThreeService;
@@ -46,7 +46,7 @@ class TopsOfTheTopsController extends Controller
     /**
      * @throws Exception
      */
-    public function resultArray($time, $token, $topThreeGames, $conn): array
+    /*public function resultArray($time, $token, $topThreeGames, $conn): array
     {
         $date = date('Y-m-d H:i:s');
 
@@ -70,12 +70,14 @@ class TopsOfTheTopsController extends Controller
                     $finalResult[] = $gameNotFoundVideos;
                     if (in_array($game['id'], $allIds)) {
                         $this->updateStreamer($conn, $gameNotFoundVideos, $date);
-                    } else {
+                    }
+                    if (!in_array($game['id'], $allIds)) {
                         $this->insertStreamer($conn, $gameNotFoundVideos, $date);
                     }
                 }
             }
-        } else {
+        }
+        if ($result->num_rows <= 0) {
             foreach ($topThreeGames['data'] as $game) {
                 $gameVideos = $this->videosService->videos($token, $game);
                 $finalResult[] = $gameVideos;
@@ -148,12 +150,12 @@ class TopsOfTheTopsController extends Controller
         );
         $stmt->execute();
         $stmt->close();
-    }
+    }*/
 
     /**
      * @throws Exception
      */
-    public function getInTimeStreamers($result, $time): array
+    /*public function getInTimeStreamers($result, $time): array
     {
         $inTime = array();
 
@@ -178,5 +180,5 @@ class TopsOfTheTopsController extends Controller
             $allIds[] = $line['game_id'];
         }
         return $allIds;
-    }
+    }*/
 }
