@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('display_name', 64)->nullable();
             $table->string('type', 64)->nullable();
             $table->string('broadcaster_type', 64)->nullable();
-            $table->string('desciption', 1024)->nullable();
+            $table->string('description', 1024)->nullable();
             $table->string('profile_image_url', 1024)->nullable();
             $table->string('offline_image_url', 1024)->nullable();
             $table->integer('view_count')->nullable();

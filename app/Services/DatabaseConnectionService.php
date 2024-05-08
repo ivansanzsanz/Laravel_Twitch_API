@@ -14,6 +14,7 @@ class DatabaseConnectionService
     private $port;
     private $user_name;
     private $password;
+    public $conn;
 
     //private $dsn;
     //protected $pdo;
@@ -36,12 +37,12 @@ class DatabaseConnectionService
             die("Error de conexion: " . $exception->getMessage());
         }*/
 
-        $conn = new mysqli($this->host_name, $this->user_name, $this->password, $this->database);
+        $conn = new mysqli($this->host_name, $this->user_name, $this->password, $this->database, $this->port);
 
         if ($conn->connect_error) {
             die("Conexión fallida: " . $conn->connect_error);
         }
 
-        return $conn;
+        $this->conn = $conn;
     }
 }

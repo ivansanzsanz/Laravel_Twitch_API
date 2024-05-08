@@ -13,11 +13,11 @@ class GetStreamsService
 
     public function execute()
     {
-        $streams = $this->streamsManager->getStreams();
+        $streamsResponse = $this->streamsManager->getStreams();
 
         $result = array();
 
-        foreach ($streams['data'] as $item) {
+        foreach ($streamsResponse['data'] as $item) {
             $result[] = array(
                 'user_name' => $item['user_name'],
                 'title' => $item['title']
