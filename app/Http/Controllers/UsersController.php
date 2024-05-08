@@ -18,6 +18,11 @@ class UsersController extends Controller
 
     public function __invoke(Request $request): JsonResponse
     {
+        if (!$request->query('id')) {
+            return response()->json([
+                'error' => 'URL mal introducida falta o no es numerico la id'
+            ], 400);
+        }
         $userId = $request->query('id');
         $user = $this->getUsersService->execute($userId);
 

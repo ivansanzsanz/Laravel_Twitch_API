@@ -26,7 +26,7 @@ class GetUsersServiceTest extends TestCase
     {
         $response = $this->get('/analytics/users?id=');
 
-        $response->assertStatus(302);
+        $response->assertStatus(400);
     }
 
     /**
