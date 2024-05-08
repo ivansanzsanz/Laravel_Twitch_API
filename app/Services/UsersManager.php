@@ -21,6 +21,8 @@ class UsersManager
             'Authorization: Bearer ' . $this->token,
         );
 
+        echo($url . "\n");
+        echo(implode(" /// ", $header). "\n");
         $response = $this->apiClient->makeCurlCall($url, $header);
 
         $response = json_decode($response, true);

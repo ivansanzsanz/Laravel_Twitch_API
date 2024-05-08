@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UsersRequest;
 use App\Services\GetUsersService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+
 
 class UsersController extends Controller
 {
@@ -15,7 +17,7 @@ class UsersController extends Controller
         $this->getUsersService = $getUsersService;
     }
 
-    public function __invoke(UsersRequest $request): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
         $userId = $request->query('id');
 

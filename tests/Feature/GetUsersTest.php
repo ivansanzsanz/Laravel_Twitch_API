@@ -48,7 +48,8 @@ class GetUsersTest extends TestCase
             ->once()
             ->andReturn($userExpected);
 
-        $response = $this->get('/analytics/users?id=123456789');
+        //$response = $this->get('/analytics/users?id=123456789');
+        $response = $this->get('/analytics/users?id=417603922');
 
         $response->assertStatus(200);
         $response->assertContent('[{"id":"123456789","login":"login","display_name":"display_name","type":"","broadcaster_type":"","description":"description","profile_image_url":"profile_image_url","offline_image_url":"","view_count":0,"created_at":"05-05-2024"}]');
