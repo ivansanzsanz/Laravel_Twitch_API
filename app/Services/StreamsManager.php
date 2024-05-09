@@ -13,15 +13,15 @@ class StreamsManager
     public function __construct(ApiClient $apiClient)
     {
         $this->apiClient = $apiClient;
+        $this->twitchProvider = new TwitchProvider($apiClient);
     }
 
     public function getStreams(): array
     {
         $url = "https://api.twitch.tv/helix/streams";
-        $this->getTokenTwitch();
 
         $header = array(
-            'Authorization: Bearer ' . $this->token,
+            'Authorization: Bearer ' . $this->twitchProvider->getTokenTwitch(),
         );
 
         $response = $this->apiClient->makeCurlCall($url, $header);
@@ -34,25 +34,5 @@ class StreamsManager
         }
 
         return $response;
-    }
-
-    //Sacar a TwitchProvider.php
-
-    private function getTokenTwitch(): string
-    {
-        $url = 'https://id.twitch.tv/oauth2/token';
-
-        $response = $this->apiClient->getToken($url);
-
-        $decodedResponse = json_decode($response, true);
-
-        if (!isset($decodedResponse['access_token'])) {
-            echo "Error en la peticion curl del token";
-            exit;
-        }
-
-        $this->token = $decodedResponse['access_token'];
-
-        return $this->token;
     }
 }

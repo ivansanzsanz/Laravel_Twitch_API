@@ -14,7 +14,7 @@ class CurlUsersService
     public function curlUsers($id_usuario)
     {
 
-        $access_token = $this->tokenService->token();
+        $access_token = $this->tokenService->getToken();
 
         $client_id = env('CLIENT_ID');
         $ch2 = curl_init();

@@ -11,7 +11,7 @@ class TokenService
         $this->databaseConnection = new DatabaseConnectionService();
     }
 
-    public function token()
+    public function getToken()
     {
         $conn = $this->databaseConnection->__construct();
 

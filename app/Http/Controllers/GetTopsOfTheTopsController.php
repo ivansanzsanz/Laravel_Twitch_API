@@ -32,7 +32,7 @@ class GetTopsOfTheTopsController extends Controller
      */
     public function topsOfTheTops(Request $request): JsonResponse
     {
-        $token = $this->tokenService->token();
+        $token = $this->tokenService->getToken();
         $topThreeGames = $this->topThreeService->top3($token);
         $conn = $this->databaseConnection->__construct();
 
@@ -46,7 +46,7 @@ class GetTopsOfTheTopsController extends Controller
     /**
      * @throws Exception
      */
-    /*public function resultArray($time, $token, $topThreeGames, $conn): array
+    public function resultArray($time, $token, $topThreeGames, $conn): array
     {
         $date = date('Y-m-d H:i:s');
 
@@ -150,12 +150,12 @@ class GetTopsOfTheTopsController extends Controller
         );
         $stmt->execute();
         $stmt->close();
-    }*/
+    }
 
     /**
      * @throws Exception
      */
-    /*public function getInTimeStreamers($result, $time): array
+    public function getInTimeStreamers($result, $time): array
     {
         $inTime = array();
 
@@ -180,5 +180,5 @@ class GetTopsOfTheTopsController extends Controller
             $allIds[] = $line['game_id'];
         }
         return $allIds;
-    }*/
+    }
 }
