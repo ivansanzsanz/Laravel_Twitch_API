@@ -7,7 +7,7 @@ use App\Services\GetUsersService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class GetUsersController extends Controller
 {
     private GetUsersService $getUsersService;
 

@@ -6,7 +6,7 @@ use App\Services\GetStreamsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class StreamsController extends Controller
+class GetStreamsController extends Controller
 {
     private GetStreamsService $getStreamsService;
 

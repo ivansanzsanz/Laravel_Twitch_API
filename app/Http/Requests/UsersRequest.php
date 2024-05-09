@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use Dotenv\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UsersRequest extends FormRequest
@@ -25,5 +27,15 @@ class UsersRequest extends FormRequest
             //
             'id' => 'required|integer',
         ];
+    }
+
+    /**
+     * @throws HttpResponseException
+     */
+    protected function failedValidation($validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'error' => $validator->errors()->first(),
+        ], 400));
     }
 }

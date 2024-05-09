@@ -36,6 +36,8 @@ class StreamsManager
         return $response;
     }
 
+    //Sacar a TwitchProvider.php
+
     private function getTokenTwitch(): string
     {
         $url = 'https://id.twitch.tv/oauth2/token';
