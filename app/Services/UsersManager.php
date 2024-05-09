@@ -44,12 +44,14 @@ class UsersManager
         $header = array(
             'Authorization: Bearer ' . $this->token,
         );
-
-        echo($url . "\n");
-        echo(implode(" /// ", $header) . "\n");
+        
         $response = $this->apiClient->makeCurlCall($url, $header);
 
+        //dd($response);
+
         $response = json_decode($response, true);
+
+
 
         if (!isset($response['data'])) {
             echo "Error en la peticion curl del user";

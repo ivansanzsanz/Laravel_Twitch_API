@@ -2,6 +2,10 @@
 
 namespace Services;
 
+use App\Http\Requests\UsersRequest;
+use App\Models\User;
+use App\Services\ApiClient;
+use Illuminate\Support\Facades\Validator;
 use App\Services\GetUsersService;
 use App\Services\UsersManager;
 use Mockery;
@@ -49,5 +53,31 @@ class GetUsersServiceTest extends TestCase
             'view_count' => 0,
             'created_at' => '05-05-2024'
         ]));
+    }
+
+    public function givenAnUserRequestWithoutIdReturnsCode400()
+    {
+        $response = $this->get('/analytics/users');
+
+        $response->assertStatus(400);
+    }
+
+    public function givenAnUserRequestWithIdNullReturnsCode400()
+    {
+        $response = $this->get('/analytics/users?id=');
+
+        $response->assertStatus(400);
+    }
+    public function givenAnUserRequestWithIdReturnsCode400()
+    {
+        $response = $this->get('/analytics/users?id=417603922');
+
+        $response->assertStatus(400);
+    }
+
+    public function givenBadUrlforGetTockenReturnsCode400()
+    {
+        $cliente = new ApiClient();
+        $cliente->getToken("meinvento/la/url");
     }
 }
