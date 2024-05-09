@@ -12,7 +12,7 @@ class GetStreamsServiceTests extends TestCase
     /**
      * @test
      */
-    public function executeDoesNotReturnEmptyArray ()
+    public function executeDoesNotReturnEmptyArray()
     {
         $getStreamsService = new GetStreamsService(new StreamsManager(new ApiClient()));
 
@@ -30,7 +30,7 @@ class GetStreamsServiceTests extends TestCase
 
         $arrayResponse = $getStreamsService->execute();
 
-        foreach ($arrayResponse as $stream){
+        foreach ($arrayResponse as $stream) {
             $this->assertArrayHasKey("user_name", $stream);
             $this->assertArrayHasKey("title", $stream);
         }
@@ -45,7 +45,7 @@ class GetStreamsServiceTests extends TestCase
 
         $arrayResponse = $getStreamsService->execute();
 
-        foreach ($arrayResponse as $stream){
+        foreach ($arrayResponse as $stream) {
             $this->assertNotEmpty($stream["user_name"]);
             $this->assertNotEmpty($stream["title"]);
         }

@@ -46,7 +46,7 @@ class UsersManager
         );
 
         echo($url . "\n");
-        echo(implode(" /// ", $header). "\n");
+        echo(implode(" /// ", $header) . "\n");
         $response = $this->apiClient->makeCurlCall($url, $header);
 
         $response = json_decode($response, true);

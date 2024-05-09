@@ -4,7 +4,6 @@ namespace App\Services;
 
 class TwitchProvider
 {
-
     public function __construct(ApiClient $apiClient)
     {
         $this->apiClient = $apiClient;
