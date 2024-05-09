@@ -4,6 +4,7 @@ namespace Services;
 
 use App\Http\Requests\UsersRequest;
 use App\Models\User;
+use App\Services\ApiClient;
 use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
@@ -29,6 +30,7 @@ class GetUsersServiceTest extends TestCase
         $response->assertStatus(400);
     }
 
+
     /**
      * @test
      */
@@ -37,5 +39,11 @@ class GetUsersServiceTest extends TestCase
         $response = $this->get('/analytics/users');
 
         $response->assertStatus(400);
+    }
+
+    public function givenBadUrlforGetTockenReturnsCode400()
+    {
+        $cliente = new ApiClient();
+        $cliente->getToken("meinvento/la/url");
     }
 }
