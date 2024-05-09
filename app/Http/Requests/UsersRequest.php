@@ -24,7 +24,8 @@ class UsersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|numeric'
+            //
+            'id' => 'required|integer',
         ];
     }
 
