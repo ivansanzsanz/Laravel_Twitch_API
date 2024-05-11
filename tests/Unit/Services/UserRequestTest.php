@@ -41,7 +41,7 @@ class UserRequestTest extends TestCase
         $this->assertFalse($validator->passes());
         $this->assertTrue($validator->fails());
         $this->assertArrayHasKey('id', $validator->errors()->messages());
-        $this->assertEquals('The id field must be an integer.', $validator->errors()->first('id'));
+        $this->assertEquals('The id field must be a number.', $validator->errors()->first('id'));
     }
 
     /** @test */

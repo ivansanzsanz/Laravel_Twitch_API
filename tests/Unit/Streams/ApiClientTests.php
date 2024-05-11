@@ -14,7 +14,7 @@ class ApiClientTests extends TestCase
     {
         $apiClient = new ApiClient();
         $url = "https://api.twitch.tv/helix/streams";
-        $badToken = "iHateSnickers";
+        $badToken = "iHateKnitters";
 
         $header = array(
             'Authorization: Bearer ' . $badToken,

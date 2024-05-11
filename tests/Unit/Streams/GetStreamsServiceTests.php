@@ -50,4 +50,5 @@ class GetStreamsServiceTests extends TestCase
             $this->assertNotEmpty($stream["title"]);
         }
     }
+
 }
