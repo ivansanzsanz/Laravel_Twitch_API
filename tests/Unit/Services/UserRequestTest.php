@@ -14,25 +14,6 @@ use App\Models\User;
 class UserRequestTest extends TestCase
 {
     /** @test */
-    public function givenUrlWithOutIdValueReturnsCode400()
-    {
-        $user = new User();
-
-        // Simular una solicitud sin el ID
-        $response = $this->actingAs($user)->json('GET', '/analytics/users', []);
-        dd($response);
-        $response->assertStatus(400);
-        $response->assertJsonValidationErrors('id');
-        $response->assertJsonPath('errors.id', ['El ID es obligatorio.']);
-    }
-    /** @test */
-    public function testExample()
-    {
-       // $user = User::factory()->create();
-        $user = new User();
-        $this->assertModelExists($user);
-    }
-    /** @test */
 
     public function idIsRequired()
     {
