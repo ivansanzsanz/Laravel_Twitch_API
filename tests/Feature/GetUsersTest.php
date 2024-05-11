@@ -78,13 +78,14 @@ class GetUsersTest extends TestCase
             ]]))
             ->once();
 
-        $response = $this->get('/analytics/users?id=123456789');
+        $userResponse = $this->get('/analytics/users?id=123456789');
+        //$response = $this->get('/analytics/users?id=417603922');
 
-        $response->assertStatus(200);
-        $checkStr1 = '[{"id":"123456789","login":"login","display_name":"display_name",';
-        $checkStr2 = '"type":"","broadcaster_type":"","description":"description",';
-        $checkStr3 = '"profile_image_url":"profile_image_url","offline_image_url":"",';
-        $checkStr4 = '"view_count":0,"created_at":"05-05-2024"}]';
-        $response->assertContent($checkStr1 . $checkStr2 . $checkStr3 . $checkStr4);
+        $userResponse->assertStatus(200);
+        $checkStrPart1 = '[{"id":"123456789","login":"login","display_name":"display_name",';
+        $checkStrPart2 = '"type":"","broadcaster_type":"","description":"description",';
+        $checkStrPart3 = '"profile_image_url":"profile_image_url","offline_image_url":"",';
+        $checkStrPart4 = '"view_count":0,"created_at":"05-05-2024"}]';
+        $userResponse->assertContent($checkStrPart1 . $checkStrPart2 . $checkStrPart3 . $checkStrPart4);
     }
 }
