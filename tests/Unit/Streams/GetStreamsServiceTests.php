@@ -16,9 +16,9 @@ class GetStreamsServiceTests extends TestCase
     {
         $getStreamsService = new GetStreamsService(new StreamsManager(new ApiClient()));
 
-        $arrayResponse = $getStreamsService->execute();
+        $streamsResponse = $getStreamsService->execute();
 
-        $this->assertNotEmpty($arrayResponse);
+        $this->assertNotEmpty($streamsResponse);
     }
 
     /**
@@ -28,9 +28,9 @@ class GetStreamsServiceTests extends TestCase
     {
         $getStreamsService = new GetStreamsService(new StreamsManager(new ApiClient()));
 
-        $arrayResponse = $getStreamsService->execute();
+        $streamsResponse = $getStreamsService->execute();
 
-        foreach ($arrayResponse as $stream) {
+        foreach ($streamsResponse as $stream) {
             $this->assertArrayHasKey("user_name", $stream);
             $this->assertArrayHasKey("title", $stream);
         }
@@ -43,12 +43,11 @@ class GetStreamsServiceTests extends TestCase
     {
         $getStreamsService = new GetStreamsService(new StreamsManager(new ApiClient()));
 
-        $arrayResponse = $getStreamsService->execute();
+        $streamsResponse = $getStreamsService->execute();
 
-        foreach ($arrayResponse as $stream) {
+        foreach ($streamsResponse as $stream) {
             $this->assertNotEmpty($stream["user_name"]);
             $this->assertNotEmpty($stream["title"]);
         }
     }
-
 }

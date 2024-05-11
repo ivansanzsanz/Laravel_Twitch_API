@@ -12,10 +12,11 @@ class GetStreamsServiceTest extends TestCase
     /**
      * @test
      */
-    public function executeStreamsValidResponseTest(){
+    public function executeStreamsValidResponseTest()
+    {
         $mockery = new Mockery();
         $streamsManager = $mockery->mock(StreamsManager::class);
-        $streamsManagerResponseExpected = array('data' => [
+        $SMResponseExpected = array('data' => [
             [
                 "title" => "titulo1",
                 "random" => "random",
@@ -37,12 +38,12 @@ class GetStreamsServiceTest extends TestCase
             ->expects('getStreams')
             ->with()
             ->once()
-            ->andReturn($streamsManagerResponseExpected);
+            ->andReturn($SMResponseExpected);
 
         $getStreamsService = new GetStreamsService($streamsManager);
-        $getStreamsServiceResponseWithMockery = $getStreamsService->execute();
+        $responseWithMockery = $getStreamsService->execute();
 
-        $this->assertEquals($getStreamsServiceResponseWithMockery, array(
+        $this->assertEquals($responseWithMockery, array(
             [
                 "user_name" => "user_name1",
                 "title" => "titulo1"
@@ -56,6 +57,5 @@ class GetStreamsServiceTest extends TestCase
                 "title" => "titulo3"
             ]
         ));
-
     }
 }

@@ -20,7 +20,7 @@ class GetUsersServiceTest extends TestCase
     {
         $mockery = new Mockery();
         $usersManager = $mockery->mock(UsersManager::class);
-        $userExpected = array('data' => [[
+        $userResponseExpected = array('data' => [[
             'id' => '123456789',
             'login' => 'login',
             'display_name' => 'display_name',
@@ -37,12 +37,12 @@ class GetUsersServiceTest extends TestCase
             ->expects('getUserById')
             ->with('123456789')
             ->once()
-            ->andReturn($userExpected);
+            ->andReturn($userResponseExpected);
 
-        $getUsersService = new GetUsersService($usersManager);
-        $result = $getUsersService->execute('123456789');
+        $getUsersServiceMock = new GetUsersService($usersManager);
+        $resultWithMockery = $getUsersServiceMock->execute('123456789');
 
-        $this->assertEquals($result, array(['id' => '123456789',
+        $this->assertEquals($resultWithMockery, array(['id' => '123456789',
             'login' => 'login',
             'display_name' => 'display_name',
             'type' => '',
@@ -100,5 +100,4 @@ class GetUsersServiceTest extends TestCase
 //        $cliente = new ApiClient();
 //        $cliente->getToken("meinvento/la/url?id=prueba");
 //    }
-
 }

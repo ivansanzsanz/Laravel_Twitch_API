@@ -17,14 +17,15 @@ class UserRequestTest extends TestCase
 
     public function idIsRequired()
     {
-        $user_req = new UsersRequest();
+        $usersRequest = new UsersRequest();
 
         $validatorFactory = app(ValidatorFactory::class);
 
-        $validator = $validatorFactory->make([], $user_req->rules()); // Simulamos envío sin ID
+        $validator = $validatorFactory->make([], $usersRequest->rules());
 
         $this->assertFalse($validator->passes());
         $this->assertTrue($validator->fails());
+                // Simulamos envío con campo id vacío
         $this->assertArrayHasKey('id', $validator->errors()->messages());
         $this->assertEquals('The id field is required.', $validator->errors()->first('id'));
     }
@@ -32,11 +33,12 @@ class UserRequestTest extends TestCase
     /** @test */
     public function idMustBeAnInteger()
     {
-        $user_req = new UsersRequest();
+        $usersRequest = new UsersRequest();
 
         $validatorFactory = app(ValidatorFactory::class);
 
-        $validator = $validatorFactory->make(['id' => 'abc'], $user_req->rules());
+                // Simulamos envío con campo id='abc'
+        $validator = $validatorFactory->make(['id' => 'abc'], $usersRequest->rules());
 
         $this->assertFalse($validator->passes());
         $this->assertTrue($validator->fails());
@@ -47,11 +49,11 @@ class UserRequestTest extends TestCase
     /** @test */
     public function validIdPassesValidation()
     {
-        $user_req = new UsersRequest();
+        $usersRequest = new UsersRequest();
 
         $validatorFactory = app(ValidatorFactory::class);
 
-        $validator = $validatorFactory->make(['id' => '417603922'], $user_req->rules());
+        $validator = $validatorFactory->make(['id' => '417603922'], $usersRequest->rules());
 
         $this->assertTrue($validator->passes());
         $this->assertFalse($validator->fails());

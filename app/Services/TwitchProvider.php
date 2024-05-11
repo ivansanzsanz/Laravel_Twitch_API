@@ -15,14 +15,14 @@ class TwitchProvider
 
         $getTokenResponse = $this->apiClient->getToken($url);
 
-        $decodedGetTokenResponse = json_decode($getTokenResponse, true);
+        $decodedTokenResponse = json_decode($getTokenResponse, true);
 
-        if (!isset($decodedGetTokenResponse['access_token'])) {
+        if (!isset($decodedTokenResponse['access_token'])) {
             echo "Error en la peticion curl del token";
             exit;
         }
 
-        $this->token = $decodedGetTokenResponse['access_token'];
+        $this->token = $decodedTokenResponse['access_token'];
 
         return $this->token;
     }
