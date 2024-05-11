@@ -78,8 +78,8 @@ class GetUsersTest extends TestCase
             ]]))
             ->once();
 
-        //$response = $this->get('/analytics/users?id=123456789');
-        $response = $this->get('/analytics/users?id=417603922');
+        $response = $this->get('/analytics/users?id=123456789');
+        //$response = $this->get('/analytics/users?id=417603922');
 
         $response->assertStatus(200);
         $checkStr1 = '[{"id":"123456789","login":"login","display_name":"display_name",';
