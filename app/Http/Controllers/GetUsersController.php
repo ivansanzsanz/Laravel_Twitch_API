@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UsersRequest;
 use App\Services\GetUsersService;
+use App\Services\UserValidator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Factory as ValidatorFactory;
 
 class GetUsersController extends Controller
 {
@@ -18,12 +20,16 @@ class GetUsersController extends Controller
 
     public function __invoke(Request $request): JsonResponse
     {
-        if (!$request->query('id')) {
+        $validator = new UserValidator();
+        $respuesta_validacion = $validator->validateUserRequest($request);
+
+        if ($respuesta_validacion != 'id correcta') {
             return response()->json([
-                'error' => 'URL mal introducida falta o no es numerico la id'
-            ], 400);
+                'error' => $respuesta_validacion
+            ], 400) ;
         }
         $userId = $request->query('id');
+
         $user = $this->getUsersService->execute($userId);
 
         return response()->json($user);

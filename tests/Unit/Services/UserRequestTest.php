@@ -1,25 +1,46 @@
 <?php
 
-namespace Tests\Services;
+namespace Tests\Unit\Services;
 
 //use PHPUnit\Framework\TestCase;
 use App\Http\Requests\UsersRequest;
-use Tests\TestCase;
-use App\Models\User;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
+use Tests\TestCase;
+use Illuminate\Validation\Factory as ValidatorFactory;
+use App\Models\User;
+
+//use Illuminate\Validation\ValidationException;
 
 class UserRequestTest extends TestCase
 {
+    /** @test */
+    public function givenUrlWithOutIdValueReturnsCode400()
+    {
+        $user = new User();
+
+        // Simular una solicitud sin el ID
+        $response = $this->actingAs($user)->json('GET', '/analytics/users', []);
+        dd($response);
+        $response->assertStatus(400);
+        $response->assertJsonValidationErrors('id');
+        $response->assertJsonPath('errors.id', ['El ID es obligatorio.']);
+    }
+    /** @test */
+    public function testExample()
+    {
+       // $user = User::factory()->create();
+        $user = new User();
+        $this->assertModelExists($user);
+    }
     /** @test */
 
     public function idIsRequired()
     {
         $user_req = new UsersRequest();
 
-        $validatorClass = new Validator();
+        $validatorFactory = app(ValidatorFactory::class);
 
-        $validator = $validatorClass->make([], $user_req->rules()); // Simulamos envío sin ID
+        $validator = $validatorFactory->make([], $user_req->rules()); // Simulamos envío sin ID
 
         $this->assertFalse($validator->passes());
         $this->assertTrue($validator->fails());
@@ -32,9 +53,9 @@ class UserRequestTest extends TestCase
     {
         $user_req = new UsersRequest();
 
-        $validatorClass = new Validator();
+        $validatorFactory = app(ValidatorFactory::class);
 
-        $validator = $validatorClass->make(['id' => 'abc'], $user_req->rules());
+        $validator = $validatorFactory->make(['id' => 'abc'], $user_req->rules());
 
         $this->assertFalse($validator->passes());
         $this->assertTrue($validator->fails());
@@ -47,9 +68,9 @@ class UserRequestTest extends TestCase
     {
         $user_req = new UsersRequest();
 
-        $validatorClass = new Validator();
+        $validatorFactory = app(ValidatorFactory::class);
 
-        $validator = $validatorClass->make(['id' => '417603922'], $user_req->rules());
+        $validator = $validatorFactory->make(['id' => '417603922'], $user_req->rules());
 
         $this->assertTrue($validator->passes());
         $this->assertFalse($validator->fails());

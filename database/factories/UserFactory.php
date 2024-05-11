@@ -3,8 +3,9 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
+//use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Hashing\HashManager;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -23,13 +24,15 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $hash = new Hash();
+        $hashManager = app(HashManager::class);
+        //$hash = new Hash();
         $str = new Str();
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= $hash->make('password'),
+            //'password' => static::$password ??= $hash->make('password'),
+            'password' => static::$password ??= $hashManager->make('password'),
             'remember_token' => $str->random(10),
         ];
     }

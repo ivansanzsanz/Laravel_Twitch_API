@@ -54,20 +54,27 @@ class GetUsersServiceTest extends TestCase
             'created_at' => '05-05-2024'
         ]));
     }
-
+    /**
+     * @test
+     */
     public function givenAnUserRequestWithoutIdReturnsCode400()
     {
         $response = $this->get('/analytics/users');
 
         $response->assertStatus(400);
     }
-
+    /**
+     * @test
+     */
     public function givenAnUserRequestWithIdNullReturnsCode400()
     {
         $response = $this->get('/analytics/users?id=');
 
         $response->assertStatus(400);
     }
+    /**
+     * @test
+     */
     public function givenAnUserRequestWithIdReturnsCode400()
     {
         $response = $this->get('/analytics/users?id=417603922');
@@ -79,5 +86,11 @@ class GetUsersServiceTest extends TestCase
     {
         $cliente = new ApiClient();
         $cliente->getToken("meinvento/la/url");
+    }
+
+    public function givenAnUserRequestWithIdSreingReturnsCode400()
+    {
+        $cliente = new ApiClient();
+        $cliente->getToken("meinvento/la/url?id=prueba");
     }
 }
