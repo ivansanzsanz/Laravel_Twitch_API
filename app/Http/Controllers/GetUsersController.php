@@ -29,7 +29,6 @@ class GetUsersController extends Controller
             ], 400) ;
         }
         $userId = $request->query('id');
-
         $user = $this->getUsersService->execute($userId);
 
         return response()->json($user);
