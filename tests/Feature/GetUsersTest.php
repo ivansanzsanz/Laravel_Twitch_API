@@ -80,7 +80,6 @@ class GetUsersTest extends TestCase
             ->once();
 
         $userResponse = $this->get('/analytics/users?id=123456789');
-        //$response = $this->get('/analytics/users?id=417603922');
 
         $userResponse->assertStatus(200);
         $checkStrPart1 = '[{"id":"123456789","login":"login","display_name":"display_name",';
