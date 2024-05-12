@@ -2,10 +2,6 @@
 
 namespace Services;
 
-use App\Http\Requests\UsersRequest;
-use App\Models\User;
-use App\Services\ApiClient;
-use Illuminate\Support\Facades\Validator;
 use App\Services\GetUsersService;
 use App\Services\UsersManager;
 use Mockery;

@@ -2,9 +2,6 @@
 
 namespace App\Services;
 
-//use PDO;
-//use PDOException;
-
 use mysqli;
 
 class DatabaseConnectionService
@@ -15,9 +12,6 @@ class DatabaseConnectionService
     private $user_name;
     private $password;
     public $conn;
-
-    //private $dsn;
-    //protected $pdo;
 
     public function __construct()
     {

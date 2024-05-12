@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Http\Requests\UsersRequest;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\Factory as ValidatorFactory;
 use Illuminate\Http\Request;
 

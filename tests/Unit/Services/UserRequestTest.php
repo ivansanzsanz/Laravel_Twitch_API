@@ -3,10 +3,8 @@
 namespace Tests\Unit\Services;
 
 use App\Http\Requests\UsersRequest;
-use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 use Illuminate\Validation\Factory as ValidatorFactory;
-use App\Models\User;
 
 class UserRequestTest extends TestCase
 {

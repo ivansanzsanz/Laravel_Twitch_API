@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UsersRequest;
 use App\Services\GetUsersService;
 use App\Services\UserValidator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Factory as ValidatorFactory;
 
 class GetUsersController extends Controller
 {

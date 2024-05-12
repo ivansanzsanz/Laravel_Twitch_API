@@ -2,9 +2,6 @@
 
 namespace App\Services;
 
-use Illuminate\Http\JsonResponse;
-use PhpParser\Node\Scalar\String_;
-
 class StreamsManager
 {
     private ApiClient $apiClient;

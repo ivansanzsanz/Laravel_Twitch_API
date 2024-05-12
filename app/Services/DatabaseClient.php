@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use mysqli_result;
-
 class DatabaseClient
 {
     public $conn;

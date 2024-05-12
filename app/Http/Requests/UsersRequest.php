@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Dotenv\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
 
