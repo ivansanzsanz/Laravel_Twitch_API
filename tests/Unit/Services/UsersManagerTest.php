@@ -40,7 +40,7 @@ class UsersManagerTest extends TestCase
             ->once()
             ->andReturn(null);
         $twitchProvider
-            ->expects('getTokenTwitch')
+            ->expects('getToken')
             ->once()
             ->andReturn($tokenExpected);
         $apiClient
@@ -68,7 +68,7 @@ class UsersManagerTest extends TestCase
             ->once();
 
         $usersManager = new UsersDataManager($apiClient, $databaseClientMocker, $twitchProvider);
-        $userByIdResult = $usersManager->getUserById('123456789');
+        $userByIdResult = $usersManager->userDataProvider('123456789');
 
         $this->assertEquals($userByIdResult, array('data' => [[
             'id' => '123456789',

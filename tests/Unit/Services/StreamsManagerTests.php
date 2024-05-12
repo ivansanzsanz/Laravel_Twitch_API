@@ -15,7 +15,7 @@ class StreamsManagerTests extends TestCase
     {
         $streamsManager = new StreamsDataManager(new ApiClient());
 
-        $streamsResponse = $streamsManager->getStreams();
+        $streamsResponse = $streamsManager->streamsDataProvider();
 
         $this->assertNotEquals("Error en la peticion curl de los streams", $streamsResponse);
     }
@@ -27,7 +27,7 @@ class StreamsManagerTests extends TestCase
     {
         $streamsManager = new StreamsDataManager(new ApiClient());
 
-        $streamsResponse = $streamsManager->getStreams();
+        $streamsResponse = $streamsManager->streamsDataProvider();
 
         $this->assertNotEmpty($streamsResponse["data"]);
     }

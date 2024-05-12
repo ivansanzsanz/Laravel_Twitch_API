@@ -32,7 +32,7 @@ class ApiClientTests extends TestCase
     {
         $apiClient = new ApiClient();
         $badUrl = "hdfjskl";
-        $token = $apiClient->getToken("https://id.twitch.tv/oauth2/token");
+        $token = $apiClient->getTokenTwitch("https://id.twitch.tv/oauth2/token");
 
         $header = array(
             'Authorization: Bearer ' . $token,
@@ -49,7 +49,7 @@ class ApiClientTests extends TestCase
     {
         $apiClient = new ApiClient();
         $badUrl = "hdfjskl";
-        $response = $apiClient->getToken($badUrl);
+        $response = $apiClient->getTokenTwitch($badUrl);
         $this->assertFalse($response);
     }
 }

@@ -15,7 +15,7 @@ class UsersDataManager
         $this->twitchProvider = $twitchProvider;
     }
 
-    public function getUserById($userId): array
+    public function userDataProvider($userId): array
     {
         $result = $this->databaseClient->getUserFromDatabase($userId);
 
@@ -30,7 +30,7 @@ class UsersDataManager
         $url = "https://api.twitch.tv/helix/users?id=" . urlencode($userId);
 
         $header = array(
-            'Authorization: Bearer ' . $this->twitchProvider->getTokenTwitch(),
+            'Authorization: Bearer ' . $this->twitchProvider->getToken(),
         );
 
         $response = $this->apiClient->makeCurlCall($url, $header);
@@ -38,7 +38,9 @@ class UsersDataManager
         $response = json_decode($response, true);
 
         if (!isset($response['data'])) {
-            echo "Error en la peticion curl del user";
+            echo response()->json([
+                'error' => 'No se pueden devolver usuarios en este momento, inténtalo más tarde'
+            ], 503);
             exit;
         }
 

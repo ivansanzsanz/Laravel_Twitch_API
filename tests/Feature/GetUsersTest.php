@@ -52,7 +52,7 @@ class GetUsersTest extends TestCase
             ->once()
             ->andReturn(null);
         $twitchProvider
-            ->expects('getTokenTwitch')
+            ->expects('getToken')
             ->once()
             ->andReturn($tokenExpected);
         $apiClient

@@ -13,7 +13,7 @@ class GetUsersService
 
     public function execute($userId): array
     {
-        $user = $this->usersManager->getUserById($userId);
+        $user = $this->usersManager->userDataProvider($userId);
 
         return $user['data'];
     }

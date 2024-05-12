@@ -30,7 +30,7 @@ class GetUsersServiceTest extends TestCase
         ]]);
 
         $usersManager
-            ->expects('getUserById')
+            ->expects('userDataProvider')
             ->with('123456789')
             ->once()
             ->andReturn($userExpected);

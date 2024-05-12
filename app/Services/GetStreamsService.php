@@ -13,7 +13,7 @@ class GetStreamsService
 
     public function execute()
     {
-        $streamsResponse = $this->streamsManager->getStreams();
+        $streamsResponse = $this->streamsManager->streamsDataProvider();
 
         $result = array();
 

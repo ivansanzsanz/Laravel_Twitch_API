@@ -13,7 +13,7 @@ class TwitchProviderTest extends TestCase
     /**
      * @test
      */
-    public function getTokenTwitchWhenThereIsNoTokenInDB()
+    public function getTokenTwitchWhenThereIsNoTokenInDatabase()
     {
         $mockery = new Mockery();
         $apiClient = $mockery->mock(ApiClient::class);
@@ -29,7 +29,7 @@ class TwitchProviderTest extends TestCase
             ->once()
             ->andReturn(false);
         $apiClient
-            ->expects('getToken')
+            ->expects('getTokenTwitch')
             ->with('https://id.twitch.tv/oauth2/token')
             ->once()
             ->andReturn($tokenExpected);
@@ -39,7 +39,7 @@ class TwitchProviderTest extends TestCase
             ->once();
 
         $twitchProvider = new TwitchProvider($apiClient, $databaseClient);
-        $tokenTwitchResult = $twitchProvider->getTokenTwitch();
+        $tokenTwitchResult = $twitchProvider->getToken();
 
         $this->assertEquals($tokenTwitchResult, 'u308tesk7yzmi8fe7el28e46dad3a5');
     }
@@ -47,7 +47,7 @@ class TwitchProviderTest extends TestCase
     /**
      * @test
      */
-    public function getTokenTwitchWhenThereIsATokenInDB()
+    public function getTokenTwitchWhenThereIsATokenInDatabase()
     {
         $mockery = new Mockery();
         $apiClient = $mockery->mock(ApiClient::class);
@@ -64,7 +64,7 @@ class TwitchProviderTest extends TestCase
             ->andReturn($tokenExpected);
 
         $twitchProvider = new TwitchProvider($apiClient, $databaseClient);
-        $tokenTwitchResult = $twitchProvider->getTokenTwitch();
+        $tokenTwitchResult = $twitchProvider->getToken();
 
         $this->assertEquals($tokenTwitchResult, 'u308tesk7yzmi8fe7el28e46dad3a5');
     }

@@ -33,7 +33,7 @@ class GetStreamsTest extends TestCase
         ]]]);
 
         $twitchProvider
-            ->expects('getTokenTwitch')
+            ->expects('getToken')
             ->once()
             ->andReturn($tokenExpected);
         $apiClient

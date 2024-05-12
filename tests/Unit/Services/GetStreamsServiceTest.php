@@ -35,7 +35,7 @@ class GetStreamsServiceTest extends TestCase
         ]);
 
         $streamsManager
-            ->expects('getStreams')
+            ->expects('streamsDataProvider')
             ->with()
             ->once()
             ->andReturn($SMResponseExpected);

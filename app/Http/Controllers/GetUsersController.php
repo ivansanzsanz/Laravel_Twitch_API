@@ -2,33 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Validators\UserValidator;
 use App\Services\GetUsersService;
-use App\Services\UserValidator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class GetUsersController extends Controller
 {
     private GetUsersService $getUsersService;
+    private UserValidator $userValidator;
 
-    public function __construct(GetUsersService $getUsersService)
+    public function __construct(GetUsersService $getUsersService, UserValidator $userValidator)
     {
         $this->getUsersService = $getUsersService;
+
+        $this->userValidator = $userValidator;
     }
 
     public function __invoke(Request $request): JsonResponse
     {
-        $validator = new UserValidator();
-        $respuesta_validacion = $validator->validateUserRequest($request);
+        if ($this->userValidator->validateUserRequest($request)) {
+            $userId = $request->query('id');
+            $user = $this->getUsersService->execute($userId);
 
-        if ($respuesta_validacion != 'id correcta') {
-            return response()->json([
-                'error' => $respuesta_validacion
-            ], 400) ;
+            return response()->json($user);
         }
-        $userId = $request->query('id');
-        $user = $this->getUsersService->execute($userId);
 
-        return response()->json($user);
+        return $this->userValidator->responseValidator($request);
     }
 }

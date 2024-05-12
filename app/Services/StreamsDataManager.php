@@ -13,12 +13,12 @@ class StreamsDataManager
         $this->twitchProvider = $twitchProvider;
     }
 
-    public function getStreams(): array
+    public function streamsDataProvider(): array
     {
         $url = "https://api.twitch.tv/helix/streams";
 
         $header = array(
-            'Authorization: Bearer ' . $this->twitchProvider->getTokenTwitch(),
+            'Authorization: Bearer ' . $this->twitchProvider->getToken(),
         );
 
         $response = $this->apiClient->makeCurlCall($url, $header);
@@ -26,7 +26,9 @@ class StreamsDataManager
         $response = json_decode($response, true);
 
         if (!isset($response['data'])) {
-            echo "Error en la peticion curl de los streams";
+            echo response()->json([
+                'error' => 'No se pueden devolver streams en este momento, inténtalo más tarde'
+            ], 503);
             exit;
         }
 
