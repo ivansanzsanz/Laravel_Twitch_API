@@ -2,12 +2,15 @@
 
 namespace App\Services;
 
+use App\Http\Infrastructure\Clients\APIClient;
+use App\Http\Infrastructure\Clients\DBClient;
+
 class TwitchProvider
 {
-    private ApiClient $apiClient;
-    private DatabaseClient $databaseClient;
+    private APIClient $apiClient;
+    private DBClient $databaseClient;
 
-    public function __construct(ApiClient $apiClient, DatabaseClient $databaseClient)
+    public function __construct(APIClient $apiClient, DBClient $databaseClient)
     {
         $this->apiClient = $apiClient;
         $this->databaseClient = $databaseClient;

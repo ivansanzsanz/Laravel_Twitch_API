@@ -2,12 +2,14 @@
 
 namespace App\Services;
 
+use App\Http\Infrastructure\Clients\APIClient;
+
 class StreamsDataManager
 {
-    private ApiClient $apiClient;
+    private APIClient $apiClient;
     private TwitchProvider $twitchProvider;
 
-    public function __construct(ApiClient $apiClient, TwitchProvider $twitchProvider)
+    public function __construct(APIClient $apiClient, TwitchProvider $twitchProvider)
     {
         $this->apiClient = $apiClient;
         $this->twitchProvider = $twitchProvider;

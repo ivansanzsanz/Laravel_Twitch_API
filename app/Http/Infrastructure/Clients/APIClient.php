@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Http\Infrastructure\Clients;
 
-class ApiClient
+class APIClient
 {
     public function getTokenTwitch($url): bool|string
     {

@@ -2,8 +2,8 @@
 
 namespace Services;
 
-use App\Services\ApiClient;
-use App\Services\DatabaseClient;
+use App\Http\Infrastructure\Clients\APIClient;
+use App\Http\Infrastructure\Clients\DBClient;
 use App\Services\TwitchProvider;
 use App\Services\UsersDataManager;
 use Mockery;
@@ -17,9 +17,9 @@ class UsersManagerTest extends TestCase
     public function getUserByIdTest()
     {
         $mockery = new Mockery();
-        $apiClient = $mockery->mock(ApiClient::class);
+        $apiClient = $mockery->mock(APIClient::class);
         $twitchProvider = $mockery->mock(TwitchProvider::class);
-        $databaseClientMocker = $mockery->mock(DatabaseClient::class);
+        $databaseClientMocker = $mockery->mock(DBClient::class);
         $tokenExpected = 'u308tesk7yzmi8fe7el28e46dad3a5';
         $userExpected = json_encode(['data' => [[
             'id' => '123456789',

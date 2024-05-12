@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Http\Infrastructure\Clients;
 
-class DatabaseClient
+use App\Services\DatabaseConnectionService;
+
+class DBClient
 {
     public $conn;
 

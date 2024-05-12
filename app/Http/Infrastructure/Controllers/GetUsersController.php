@@ -2,6 +2,7 @@
 
 namespace App\Http\Infrastructure\Controllers;
 
+use App\Serializers\DataSerializer;
 use App\Services\GetUsersService;
 use App\Validators\UserValidator;
 use Illuminate\Http\JsonResponse;
@@ -12,11 +13,16 @@ class GetUsersController extends Controller
     private GetUsersService $getUsersService;
     private UserValidator $userValidator;
 
-    public function __construct(GetUsersService $getUsersService, UserValidator $userValidator)
-    {
-        $this->getUsersService = $getUsersService;
+    private DataSerializer $dataSerializer;
 
+    public function __construct(
+        GetUsersService $getUsersService,
+        UserValidator $userValidator,
+        DataSerializer $dataSerializer
+    ) {
+        $this->getUsersService = $getUsersService;
         $this->userValidator = $userValidator;
+        $this->dataSerializer = $dataSerializer;
     }
 
     public function __invoke(Request $request): JsonResponse
@@ -25,7 +31,7 @@ class GetUsersController extends Controller
             $userId = $request->query('id');
             $user = $this->getUsersService->execute($userId);
 
-            return response()->json($user);
+            return $this->dataSerializer->serializeData($user);
         }
 
         return $this->userValidator->responseValidator($request);

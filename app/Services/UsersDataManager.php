@@ -2,13 +2,16 @@
 
 namespace App\Services;
 
+use App\Http\Infrastructure\Clients\APIClient;
+use App\Http\Infrastructure\Clients\DBClient;
+
 class UsersDataManager
 {
-    private ApiClient $apiClient;
-    private DatabaseClient $databaseClient;
+    private APIClient $apiClient;
+    private DBClient $databaseClient;
     private TwitchProvider $twitchProvider;
 
-    public function __construct(ApiClient $apiClient, DatabaseClient $databaseClient, TwitchProvider $twitchProvider)
+    public function __construct(APIClient $apiClient, DBClient $databaseClient, TwitchProvider $twitchProvider)
     {
         $this->apiClient = $apiClient;
         $this->databaseClient = $databaseClient;

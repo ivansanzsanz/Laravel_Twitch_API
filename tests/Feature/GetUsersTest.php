@@ -2,12 +2,12 @@
 
 namespace Tests\Feature;
 
-use App\Services\ApiClient;
-use App\Services\DatabaseClient;
+use App\Http\Infrastructure\Clients\APIClient;
+use App\Http\Infrastructure\Clients\DBClient;
 use App\Services\TwitchProvider;
 use App\Services\UsersDataManager;
-use Tests\TestCase;
 use Mockery;
+use Tests\TestCase;
 
 class GetUsersTest extends TestCase
 {
@@ -17,12 +17,12 @@ class GetUsersTest extends TestCase
     public function getUsers()
     {
         $mockery = new Mockery();
-        $apiClient = $mockery->mock(ApiClient::class);
+        $apiClient = $mockery->mock(APIClient::class);
         $twitchProvider = $mockery->mock(TwitchProvider::class);
-        $databaseClient = $mockery->mock(DatabaseClient::class);
+        $databaseClient = $mockery->mock(DBClient::class);
         $this->app
             ->when(UsersDataManager::class)
-            ->needs(ApiClient::class)
+            ->needs(APIClient::class)
             ->give(fn() => $apiClient);
         $this->app
             ->when(UsersDataManager::class)
@@ -30,7 +30,7 @@ class GetUsersTest extends TestCase
             ->give(fn() => $twitchProvider);
         $this->app
             ->when(UsersDataManager::class)
-            ->needs(DatabaseClient::class)
+            ->needs(DBClient::class)
             ->give(fn() => $databaseClient);
         $tokenExpected = "u308tesk7yzmi8fe7el28e46dad3a5";
         $userExpected = json_encode(['data' => [[

@@ -2,8 +2,8 @@
 
 namespace Services;
 
-use App\Services\ApiClient;
-use App\Services\DatabaseClient;
+use App\Http\Infrastructure\Clients\APIClient;
+use App\Http\Infrastructure\Clients\DBClient;
 use App\Services\TwitchProvider;
 use Mockery;
 use Tests\TestCase;
@@ -16,8 +16,8 @@ class TwitchProviderTest extends TestCase
     public function getTokenTwitchWhenThereIsNoTokenInDatabase()
     {
         $mockery = new Mockery();
-        $apiClient = $mockery->mock(ApiClient::class);
-        $databaseClient = $mockery->mock(DatabaseClient::class);
+        $apiClient = $mockery->mock(APIClient::class);
+        $databaseClient = $mockery->mock(DBClient::class);
         $tokenExpected = json_encode([
             'access_token' => 'u308tesk7yzmi8fe7el28e46dad3a5',
             'expires_in' => 5175216,
@@ -50,8 +50,8 @@ class TwitchProviderTest extends TestCase
     public function getTokenTwitchWhenThereIsATokenInDatabase()
     {
         $mockery = new Mockery();
-        $apiClient = $mockery->mock(ApiClient::class);
-        $databaseClient = $mockery->mock(DatabaseClient::class);
+        $apiClient = $mockery->mock(APIClient::class);
+        $databaseClient = $mockery->mock(DBClient::class);
         $tokenExpected = 'u308tesk7yzmi8fe7el28e46dad3a5';
 
         $databaseClient

@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Services\ApiClient;
+use App\Http\Infrastructure\Clients\APIClient;
 use App\Services\StreamsDataManager;
 use App\Services\TwitchProvider;
-use Tests\TestCase;
 use Mockery;
+use Tests\TestCase;
 
 class GetStreamsTest extends TestCase
 {
@@ -16,11 +16,11 @@ class GetStreamsTest extends TestCase
     public function getStreams()
     {
         $mockery = new Mockery();
-        $apiClient = $mockery->mock(ApiClient::class);
+        $apiClient = $mockery->mock(APIClient::class);
         $twitchProvider = $mockery->mock(TwitchProvider::class);
         $this->app
             ->when(StreamsDataManager::class)
-            ->needs(ApiClient::class)
+            ->needs(APIClient::class)
             ->give(fn() => $apiClient);
         $this->app
             ->when(StreamsDataManager::class)

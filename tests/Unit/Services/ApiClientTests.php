@@ -2,7 +2,7 @@
 
 namespace Services;
 
-use App\Services\ApiClient;
+use App\Http\Infrastructure\Clients\APIClient;
 use Tests\TestCase;
 
 class ApiClientTests extends TestCase
@@ -12,7 +12,7 @@ class ApiClientTests extends TestCase
      */
     public function givenApiClientInvalidTokenReturnsInvalidOAuthTokenMessage()
     {
-        $apiClient = new ApiClient();
+        $apiClient = new APIClient();
         $url = "https://api.twitch.tv/helix/streams";
         $badToken = "iHateKnitters";
 
@@ -30,7 +30,7 @@ class ApiClientTests extends TestCase
      */
     public function givenApiClientInvalidUrlReturnsFalse()
     {
-        $apiClient = new ApiClient();
+        $apiClient = new APIClient();
         $badUrl = "hdfjskl";
         $token = $apiClient->getTokenTwitch("https://id.twitch.tv/oauth2/token");
 
@@ -47,7 +47,7 @@ class ApiClientTests extends TestCase
      */
     public function givenBadUrlInGetTokenReturnsFalse()
     {
-        $apiClient = new ApiClient();
+        $apiClient = new APIClient();
         $badUrl = "hdfjskl";
         $response = $apiClient->getTokenTwitch($badUrl);
         $this->assertFalse($response);
