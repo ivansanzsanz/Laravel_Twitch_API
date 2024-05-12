@@ -7084,7 +7084,6 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-
             "version": "v3.56.1",
             "source": {
                 "type": "git",
@@ -7095,7 +7094,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/69c6168ae8bc96dc656c7f6c7271120a68ae5903",
                 "reference": "69c6168ae8bc96dc656c7f6c7271120a68ae5903",
-
                 "shasum": ""
             },
             "require": {
@@ -7167,9 +7165,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-
                 "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.56.1"
-
             },
             "funding": [
                 {

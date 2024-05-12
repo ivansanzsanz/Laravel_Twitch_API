@@ -20,7 +20,6 @@ class GetUsersController extends Controller
 
     public function __invoke(Request $request): JsonResponse
     {
-
         $validator = new UserValidator();
         $respuesta_validacion = $validator->validateUserRequest($request);
 
@@ -28,12 +27,6 @@ class GetUsersController extends Controller
             return response()->json([
                 'error' => $respuesta_validacion
             ], 400) ;
-/*
-        if (!$request->query('id')) {
-            return response()->json([
-                'error' => 'URL mal introducida falta o no es numerico la id'
-            ], 400);
-*/
         }
         $userId = $request->query('id');
         $user = $this->getUsersService->execute($userId);

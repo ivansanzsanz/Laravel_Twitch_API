@@ -25,11 +25,7 @@ class UsersRequest extends FormRequest
     {
         return [
             //
-
-            'id' => 'required|numeric',
-
-            //'id' => 'required|integer', //asi estaba en el main
-
+            'id' => 'required|integer',
         ];
     }
 

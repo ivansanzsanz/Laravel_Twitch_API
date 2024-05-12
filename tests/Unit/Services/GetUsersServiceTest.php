@@ -20,7 +20,7 @@ class GetUsersServiceTest extends TestCase
     {
         $mockery = new Mockery();
         $usersManager = $mockery->mock(UsersManager::class);
-        $userResponseExpected = array('data' => [[
+        $userExpected = array('data' => [[
             'id' => '123456789',
             'login' => 'login',
             'display_name' => 'display_name',
@@ -37,12 +37,12 @@ class GetUsersServiceTest extends TestCase
             ->expects('getUserById')
             ->with('123456789')
             ->once()
-            ->andReturn($userResponseExpected);
+            ->andReturn($userExpected);
 
-        $getUsersServiceMock = new GetUsersService($usersManager);
-        $resultWithMockery = $getUsersServiceMock->execute('123456789');
+        $getUsersService = new GetUsersService($usersManager);
+        $result = $getUsersService->execute('123456789');
 
-        $this->assertEquals($resultWithMockery, array(['id' => '123456789',
+        $this->assertEquals($result, array(['id' => '123456789',
             'login' => 'login',
             'display_name' => 'display_name',
             'type' => '',
@@ -54,50 +54,4 @@ class GetUsersServiceTest extends TestCase
             'created_at' => '05-05-2024'
         ]));
     }
-//
-//    /**
-//     * @test
-//     */
-//
-//    public function givenAnUserRequestWithoutIdReturnsCode400()
-//    {
-//        $response = $this->get('/analytics/users');
-//
-//        $response->assertStatus(400);
-//    }
-//
-//    /**
-//     * @test
-//     */
-//
-//    public function givenAnUserRequestWithIdNullReturnsCode400()
-//    {
-//        $response = $this->get('/analytics/users?id=');
-//
-//        $response->assertStatus(400);
-//    }
-//
-//    /**
-//     * @test
-//     */
-//
-//    public function givenAnUserRequestWithIdReturnsCode400()
-//    {
-//        $response = $this->get('/analytics/users?id=417603922');
-//
-//        $response->assertStatus(400);
-//    }
-//
-//    public function givenBadUrlforGetTockenReturnsCode400()
-//    {
-//        $cliente = new ApiClient();
-//        $cliente->getToken("meinvento/la/url");
-//    }
-//
-//
-//    public function givenAnUserRequestWithIdSreingReturnsCode400()
-//    {
-//        $cliente = new ApiClient();
-//        $cliente->getToken("meinvento/la/url?id=prueba");
-//    }
 }
