@@ -4,6 +4,7 @@ namespace App\Services;
 
 class TwitchProvider
 {
+    private ApiClient $apiClient;
     public function __construct(ApiClient $apiClient)
     {
         $this->apiClient = $apiClient;
@@ -22,8 +23,6 @@ class TwitchProvider
             exit;
         }
 
-        $this->token = $decodedTokenResponse['access_token'];
-
-        return $this->token;
+        return $decodedTokenResponse['access_token'];
     }
 }

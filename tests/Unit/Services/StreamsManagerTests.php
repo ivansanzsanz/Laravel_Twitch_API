@@ -1,6 +1,6 @@
 <?php
 
-namespace Streams;
+namespace Services;
 
 use App\Services\ApiClient;
 use App\Services\StreamsManager;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Streams;
+namespace Services;
 
 use App\Services\GetStreamsService;
 use App\Services\StreamsManager;

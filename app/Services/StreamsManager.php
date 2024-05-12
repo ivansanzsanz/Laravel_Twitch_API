@@ -7,13 +7,13 @@ use PhpParser\Node\Scalar\String_;
 
 class StreamsManager
 {
-    private string $token;
     private ApiClient $apiClient;
+    private TwitchProvider $twitchProvider;
 
-    public function __construct(ApiClient $apiClient)
+    public function __construct(ApiClient $apiClient, TwitchProvider $twitchProvider)
     {
         $this->apiClient = $apiClient;
-        $this->twitchProvider = new TwitchProvider($apiClient);
+        $this->twitchProvider = $twitchProvider;
     }
 
     public function getStreams(): array
