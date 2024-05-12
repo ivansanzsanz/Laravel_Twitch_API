@@ -26,7 +26,6 @@ class UsersRequest extends FormRequest
         return [
             //
             'id' => 'required|integer',
-
         ];
     }
 
