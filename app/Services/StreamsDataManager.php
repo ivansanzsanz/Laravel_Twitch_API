@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class StreamsManager
+class StreamsDataManager
 {
     private ApiClient $apiClient;
     private TwitchProvider $twitchProvider;

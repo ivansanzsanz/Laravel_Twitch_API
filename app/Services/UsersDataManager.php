@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class UsersManager
+class UsersDataManager
 {
     private ApiClient $apiClient;
     private DatabaseClient $databaseClient;

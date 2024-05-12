@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Services\ApiClient;
-use App\Services\StreamsManager;
+use App\Services\StreamsDataManager;
 use App\Services\TwitchProvider;
 use Tests\TestCase;
 use Mockery;
@@ -19,11 +19,11 @@ class GetStreamsTest extends TestCase
         $apiClient = $mockery->mock(ApiClient::class);
         $twitchProvider = $mockery->mock(TwitchProvider::class);
         $this->app
-            ->when(StreamsManager::class)
+            ->when(StreamsDataManager::class)
             ->needs(ApiClient::class)
             ->give(fn() => $apiClient);
         $this->app
-            ->when(StreamsManager::class)
+            ->when(StreamsDataManager::class)
             ->needs(TwitchProvider::class)
             ->give(fn() => $twitchProvider);
         $tokenExpected = 'u308tesk7yzmi8fe7el28e46dad3a5';

@@ -3,7 +3,7 @@
 namespace Services;
 
 use App\Services\GetUsersService;
-use App\Services\UsersManager;
+use App\Services\UsersDataManager;
 use Mockery;
 use Tests\TestCase;
 
@@ -15,7 +15,7 @@ class GetUsersServiceTest extends TestCase
     public function executeTest()
     {
         $mockery = new Mockery();
-        $usersManager = $mockery->mock(UsersManager::class);
+        $usersManager = $mockery->mock(UsersDataManager::class);
         $userExpected = array('data' => [[
             'id' => '123456789',
             'login' => 'login',

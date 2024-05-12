@@ -5,13 +5,19 @@ namespace App\Services;
 class TwitchProvider
 {
     private ApiClient $apiClient;
-    public function __construct(ApiClient $apiClient)
+    private DatabaseClient $databaseClient;
+    public function __construct(ApiClient $apiClient, DatabaseClient $databaseClient)
     {
         $this->apiClient = $apiClient;
+        $this->databaseClient = $databaseClient;
     }
 
     public function getTokenTwitch(): string
     {
+        if ($this->databaseClient->thereIsATokenInTheDB()) {
+            return $this->databaseClient->getTokenFromDatabase();
+        }
+
         $url = 'https://id.twitch.tv/oauth2/token';
 
         $getTokenResponse = $this->apiClient->getToken($url);
@@ -23,6 +29,10 @@ class TwitchProvider
             exit;
         }
 
-        return $decodedTokenResponse['access_token'];
+        $token = $decodedTokenResponse['access_token'];
+
+        $this->databaseClient->insertTokenInDatabase($token);
+
+        return $token;
     }
 }

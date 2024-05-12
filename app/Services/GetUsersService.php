@@ -4,9 +4,9 @@ namespace App\Services;
 
 class GetUsersService
 {
-    private UsersManager $usersManager;
+    private UsersDataManager $usersManager;
 
-    public function __construct(UsersManager $userManager)
+    public function __construct(UsersDataManager $userManager)
     {
         $this->usersManager = $userManager;
     }

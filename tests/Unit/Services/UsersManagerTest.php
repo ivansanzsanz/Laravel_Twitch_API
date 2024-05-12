@@ -5,7 +5,7 @@ namespace Services;
 use App\Services\ApiClient;
 use App\Services\DatabaseClient;
 use App\Services\TwitchProvider;
-use App\Services\UsersManager;
+use App\Services\UsersDataManager;
 use Mockery;
 use Tests\TestCase;
 
@@ -67,7 +67,7 @@ class UsersManagerTest extends TestCase
             ]]))
             ->once();
 
-        $usersManager = new UsersManager($apiClient, $databaseClientMocker, $twitchProvider);
+        $usersManager = new UsersDataManager($apiClient, $databaseClientMocker, $twitchProvider);
         $userByIdResult = $usersManager->getUserById('123456789');
 
         $this->assertEquals($userByIdResult, array('data' => [[

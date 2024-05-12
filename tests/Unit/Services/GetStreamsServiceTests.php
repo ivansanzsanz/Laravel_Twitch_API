@@ -4,7 +4,7 @@ namespace Services;
 
 use App\Services\ApiClient;
 use App\Services\GetStreamsService;
-use App\Services\StreamsManager;
+use App\Services\StreamsDataManager;
 use Tests\TestCase;
 
 class GetStreamsServiceTests extends TestCase
@@ -14,7 +14,7 @@ class GetStreamsServiceTests extends TestCase
      */
     public function executeDoesNotReturnEmptyArray()
     {
-        $getStreamsService = new GetStreamsService(new StreamsManager(new ApiClient()));
+        $getStreamsService = new GetStreamsService(new StreamsDataManager(new ApiClient()));
 
         $streamsResponse = $getStreamsService->execute();
 
@@ -26,7 +26,7 @@ class GetStreamsServiceTests extends TestCase
      */
     public function executeDoesReturnProperUsernameTitleResponse()
     {
-        $getStreamsService = new GetStreamsService(new StreamsManager(new ApiClient()));
+        $getStreamsService = new GetStreamsService(new StreamsDataManager(new ApiClient()));
 
         $streamsResponse = $getStreamsService->execute();
 
@@ -41,7 +41,7 @@ class GetStreamsServiceTests extends TestCase
  */
     public function executeDoesNotReturnEmptyUsernameTitleResponse()
     {
-        $getStreamsService = new GetStreamsService(new StreamsManager(new ApiClient()));
+        $getStreamsService = new GetStreamsService(new StreamsDataManager(new ApiClient()));
 
         $streamsResponse = $getStreamsService->execute();
 

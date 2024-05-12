@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Services\ApiClient;
 use App\Services\GetStreamsService;
-use App\Services\StreamsManager;
+use App\Services\StreamsDataManager;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

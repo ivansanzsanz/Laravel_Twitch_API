@@ -3,7 +3,7 @@
 namespace Services;
 
 use App\Services\ApiClient;
-use App\Services\StreamsManager;
+use App\Services\StreamsDataManager;
 use Tests\TestCase;
 
 class StreamsManagerTests extends TestCase
@@ -13,7 +13,7 @@ class StreamsManagerTests extends TestCase
      */
     public function getStreamsDoesNotReturnError()
     {
-        $streamsManager = new StreamsManager(new ApiClient());
+        $streamsManager = new StreamsDataManager(new ApiClient());
 
         $streamsResponse = $streamsManager->getStreams();
 
@@ -25,7 +25,7 @@ class StreamsManagerTests extends TestCase
      */
     public function getStreamsDoesNotReturnEmptyData()
     {
-        $streamsManager = new StreamsManager(new ApiClient());
+        $streamsManager = new StreamsDataManager(new ApiClient());
 
         $streamsResponse = $streamsManager->getStreams();
 

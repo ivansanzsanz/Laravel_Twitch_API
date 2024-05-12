@@ -3,6 +3,7 @@
 namespace Services;
 
 use App\Services\ApiClient;
+use App\Services\DatabaseClient;
 use App\Services\TwitchProvider;
 use Mockery;
 use Tests\TestCase;
@@ -16,6 +17,7 @@ class TwitchProviderTest extends TestCase
     {
         $mockery = new Mockery();
         $apiClient = $mockery->mock(ApiClient::class);
+        $databaseClient = $mockery->mock(DatabaseClient::class);
         $tokenExpected = json_encode([
             'access_token' => 'u308tesk7yzmi8fe7el28e46dad3a5',
             'expires_in' => 5175216,
@@ -28,7 +30,7 @@ class TwitchProviderTest extends TestCase
             ->once()
             ->andReturn($tokenExpected);
 
-        $twitchProvider = new TwitchProvider($apiClient);
+        $twitchProvider = new TwitchProvider($apiClient, $databaseClient);
         $tokenTwitchResult = $twitchProvider->getTokenTwitch();
 
         $this->assertEquals($tokenTwitchResult, 'u308tesk7yzmi8fe7el28e46dad3a5');

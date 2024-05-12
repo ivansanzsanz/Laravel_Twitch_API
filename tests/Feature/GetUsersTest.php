@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use App\Services\ApiClient;
 use App\Services\DatabaseClient;
 use App\Services\TwitchProvider;
-use App\Services\UsersManager;
+use App\Services\UsersDataManager;
 use Tests\TestCase;
 use Mockery;
 
@@ -21,15 +21,15 @@ class GetUsersTest extends TestCase
         $twitchProvider = $mockery->mock(TwitchProvider::class);
         $databaseClient = $mockery->mock(DatabaseClient::class);
         $this->app
-            ->when(UsersManager::class)
+            ->when(UsersDataManager::class)
             ->needs(ApiClient::class)
             ->give(fn() => $apiClient);
         $this->app
-            ->when(UsersManager::class)
+            ->when(UsersDataManager::class)
             ->needs(TwitchProvider::class)
             ->give(fn() => $twitchProvider);
         $this->app
-            ->when(UsersManager::class)
+            ->when(UsersDataManager::class)
             ->needs(DatabaseClient::class)
             ->give(fn() => $databaseClient);
         $tokenExpected = "u308tesk7yzmi8fe7el28e46dad3a5";

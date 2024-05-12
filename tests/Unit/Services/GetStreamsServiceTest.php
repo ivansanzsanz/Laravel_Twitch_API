@@ -3,7 +3,7 @@
 namespace Services;
 
 use App\Services\GetStreamsService;
-use App\Services\StreamsManager;
+use App\Services\StreamsDataManager;
 use Mockery;
 use Tests\TestCase;
 
@@ -15,7 +15,7 @@ class GetStreamsServiceTest extends TestCase
     public function executeStreamsValidResponseTest()
     {
         $mockery = new Mockery();
-        $streamsManager = $mockery->mock(StreamsManager::class);
+        $streamsManager = $mockery->mock(StreamsDataManager::class);
         $SMResponseExpected = array('data' => [
             [
                 "title" => "titulo1",
