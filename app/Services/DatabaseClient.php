@@ -13,16 +13,6 @@ class DatabaseClient
         $this->conn = $dbConnectionService->conn;
     }
 
-    /*public function usersInDatabase($userId){
-        $stmt = $this->conn->prepare("SELECT COUNT(*) 'cuenta' FROM users_twitch WHERE id = ?");
-
-        $stmt->bind_param("s", $userId);
-
-        $stmt->execute();
-
-        return ($stmt->get_result()->fetch_assoc()['cuenta'] > 0);
-    }*/
-
     public function getUserFromDatabase($userId): array|null
     {
         $stmt = $this->conn->prepare("SELECT * FROM users_twitch WHERE id = ?");
