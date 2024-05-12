@@ -26,7 +26,7 @@ class GetStreamsTest extends TestCase
             ->when(StreamsManager::class)
             ->needs(TwitchProvider::class)
             ->give(fn() => $twitchProvider);
-        $tokenExpected = 'ivanigg';
+        $tokenExpected = 'u308tesk7yzmi8fe7el28e46dad3a5';
         $streamsExpected = json_encode(['data' => [[
             'title' => 'Stream title',
             'user_name' => 'user_name',
@@ -38,7 +38,7 @@ class GetStreamsTest extends TestCase
             ->andReturn($tokenExpected);
         $apiClient
             ->expects('makeCurlCall')
-            ->with('https://api.twitch.tv/helix/streams', [0 => 'Authorization: Bearer ivanigg'])
+            ->with('https://api.twitch.tv/helix/streams', [0 => 'Authorization: Bearer u308tesk7yzmi8fe7el28e46dad3a5'])
             ->once()
             ->andReturn($streamsExpected);
 
