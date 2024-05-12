@@ -2,12 +2,8 @@
 
 namespace Services;
 
-use App\Http\Requests\UsersRequest;
-use App\Models\User;
-use App\Services\ApiClient;
-use Illuminate\Support\Facades\Validator;
 use App\Services\GetUsersService;
-use App\Services\UsersManager;
+use App\Services\UsersDataManager;
 use Mockery;
 use Tests\TestCase;
 
@@ -19,7 +15,7 @@ class GetUsersServiceTest extends TestCase
     public function executeTest()
     {
         $mockery = new Mockery();
-        $usersManager = $mockery->mock(UsersManager::class);
+        $usersManager = $mockery->mock(UsersDataManager::class);
         $userExpected = array('data' => [[
             'id' => '123456789',
             'login' => 'login',
@@ -34,7 +30,7 @@ class GetUsersServiceTest extends TestCase
         ]]);
 
         $usersManager
-            ->expects('getUserById')
+            ->expects('userDataProvider')
             ->with('123456789')
             ->once()
             ->andReturn($userExpected);

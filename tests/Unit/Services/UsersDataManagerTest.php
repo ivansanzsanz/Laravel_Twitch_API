@@ -2,27 +2,25 @@
 
 namespace Services;
 
-use App\Services\ApiClient;
-use App\Services\DatabaseClient;
-use App\Services\UsersManager;
+use App\Http\Infrastructure\Clients\APIClient;
+use App\Http\Infrastructure\Clients\DBClient;
+use App\Services\TwitchProvider;
+use App\Services\UsersDataManager;
 use Mockery;
 use Tests\TestCase;
 
-class UsersManagerTest extends TestCase
+class UsersDataManagerTest extends TestCase
 {
     /**
      * @test
      */
-    public function getUserByIdTest()
+    public function userDataProviderTest()
     {
         $mockery = new Mockery();
-        $apiClient = $mockery->mock(ApiClient::class);
-        $databaseClientMocker = $mockery->mock(DatabaseClient::class);
-        $tokenExpected = json_encode([
-            'access_token' => 'u308tesk7yzmi8fe7el28e46dad3a5',
-            'expires_in' => 5175216,
-            'token_type' => 'bearer',
-        ]);
+        $apiClient = $mockery->mock(APIClient::class);
+        $twitchProvider = $mockery->mock(TwitchProvider::class);
+        $databaseClientMocker = $mockery->mock(DBClient::class);
+        $tokenExpected = 'u308tesk7yzmi8fe7el28e46dad3a5';
         $userExpected = json_encode(['data' => [[
             'id' => '123456789',
             'login' => 'login',
@@ -41,9 +39,8 @@ class UsersManagerTest extends TestCase
             ->with('123456789')
             ->once()
             ->andReturn(null);
-        $apiClient
+        $twitchProvider
             ->expects('getToken')
-            ->with('https://id.twitch.tv/oauth2/token')
             ->once()
             ->andReturn($tokenExpected);
         $apiClient
@@ -70,8 +67,8 @@ class UsersManagerTest extends TestCase
             ]]))
             ->once();
 
-        $usersManager = new UsersManager($apiClient, $databaseClientMocker);
-        $userByIdResult = $usersManager->getUserById('123456789');
+        $usersManager = new UsersDataManager($apiClient, $databaseClientMocker, $twitchProvider);
+        $userByIdResult = $usersManager->userDataProvider('123456789');
 
         $this->assertEquals($userByIdResult, array('data' => [[
             'id' => '123456789',
@@ -85,31 +82,5 @@ class UsersManagerTest extends TestCase
             'view_count' => 0,
             'created_at' => '05-05-2024'
         ]]));
-    }
-
-    /**
-     * @test
-     */
-    public function getTokenTwitchTest()
-    {
-        $mockery = new Mockery();
-        $apiClient = $mockery->mock(ApiClient::class);
-        $databaseClientMocker = $mockery->mock(DatabaseClient::class);
-        $tokenExpected = json_encode([
-            'access_token' => 'u308tesk7yzmi8fe7el28e46dad3a5',
-            'expires_in' => 5175216,
-            'token_type' => 'bearer',
-        ]);
-
-        $apiClient
-            ->expects('getToken')
-            ->with('https://id.twitch.tv/oauth2/token')
-            ->once()
-            ->andReturn($tokenExpected);
-
-        $usersManager = new UsersManager($apiClient, $databaseClientMocker);
-        $tokenTwitchResult = $usersManager->getTokenTwitch();
-
-        $this->assertEquals($tokenTwitchResult, 'u308tesk7yzmi8fe7el28e46dad3a5');
     }
 }

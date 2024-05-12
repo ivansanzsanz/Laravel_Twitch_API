@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Http\Infrastructure\Clients;
 
-use mysqli_result;
+use App\Services\DatabaseConnectionService;
 
-class DatabaseClient
+class DBClient
 {
     public $conn;
 
@@ -13,15 +13,38 @@ class DatabaseClient
         $this->conn = $dbConnectionService->conn;
     }
 
-    /*public function usersInDatabase($userId){
-        $stmt = $this->conn->prepare("SELECT COUNT(*) 'cuenta' FROM users_twitch WHERE id = ?");
-
-        $stmt->bind_param("s", $userId);
+    public function thereIsATokenInTheDB(): bool
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM tokens_twitch");
 
         $stmt->execute();
 
-        return ($stmt->get_result()->fetch_assoc()['cuenta'] > 0);
-    }*/
+        $result = $stmt->get_result();
+
+        return ($result->num_rows > 0);
+    }
+
+    public function getTokenFromDatabase(): string
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM tokens_twitch");
+
+        $stmt->execute();
+
+        $result = $stmt->get_result()->fetch_assoc();
+
+        return $result['token'];
+    }
+
+    public function insertTokenInDatabase($token): void
+    {
+        $client_id = env('CLIENT_ID');
+
+        $stmt2 = $this->conn->prepare("insert into tokens_twitch (user_id, token) values (?,?)");
+
+        $stmt2->bind_param("ss", $client_id, $token);
+
+        $stmt2->execute();
+    }
 
     public function getUserFromDatabase($userId): array|null
     {

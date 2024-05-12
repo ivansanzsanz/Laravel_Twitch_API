@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Http\Infrastructure\Clients;
 
-class ApiClient
+class APIClient
 {
-    public function getToken($url): bool|string
+    public function getTokenTwitch($url): bool|string
     {
         $client_id = env('CLIENT_ID');
         $client_secret = env('CLIENT_SECRET');

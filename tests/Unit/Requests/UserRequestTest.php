@@ -1,15 +1,10 @@
 <?php
 
-namespace Tests\Unit\Services;
+namespace Requests;
 
-//use PHPUnit\Framework\TestCase;
 use App\Http\Requests\UsersRequest;
-use Illuminate\Support\Facades\Validator;
-use Tests\TestCase;
 use Illuminate\Validation\Factory as ValidatorFactory;
-use App\Models\User;
-
-//use Illuminate\Validation\ValidationException;
+use Tests\TestCase;
 
 class UserRequestTest extends TestCase
 {

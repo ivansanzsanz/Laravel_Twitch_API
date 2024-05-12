@@ -4,16 +4,16 @@ namespace App\Services;
 
 class GetStreamsService
 {
-    private StreamsManager $streamsManager;
+    private StreamsDataManager $streamsManager;
 
-    public function __construct(StreamsManager $streamsManager)
+    public function __construct(StreamsDataManager $streamsManager)
     {
         $this->streamsManager = $streamsManager;
     }
 
     public function execute()
     {
-        $streamsResponse = $this->streamsManager->getStreams();
+        $streamsResponse = $this->streamsManager->streamsDataProvider();
 
         $result = array();
 

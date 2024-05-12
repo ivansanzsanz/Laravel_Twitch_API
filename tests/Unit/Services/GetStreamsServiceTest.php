@@ -1,9 +1,9 @@
 <?php
 
-namespace Streams;
+namespace Services;
 
 use App\Services\GetStreamsService;
-use App\Services\StreamsManager;
+use App\Services\StreamsDataManager;
 use Mockery;
 use Tests\TestCase;
 
@@ -12,10 +12,10 @@ class GetStreamsServiceTest extends TestCase
     /**
      * @test
      */
-    public function executeStreamsValidResponseTest()
+    public function executeTest()
     {
         $mockery = new Mockery();
-        $streamsManager = $mockery->mock(StreamsManager::class);
+        $streamsManager = $mockery->mock(StreamsDataManager::class);
         $SMResponseExpected = array('data' => [
             [
                 "title" => "titulo1",
@@ -35,7 +35,7 @@ class GetStreamsServiceTest extends TestCase
         ]);
 
         $streamsManager
-            ->expects('getStreams')
+            ->expects('streamsDataProvider')
             ->with()
             ->once()
             ->andReturn($SMResponseExpected);
