@@ -12,7 +12,7 @@ class GetStreamsServiceTest extends TestCase
     /**
      * @test
      */
-    public function executeStreamsValidResponseTest()
+    public function executeTest()
     {
         $mockery = new Mockery();
         $streamsManager = $mockery->mock(StreamsDataManager::class);

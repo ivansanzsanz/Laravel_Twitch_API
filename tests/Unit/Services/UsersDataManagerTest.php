@@ -9,12 +9,12 @@ use App\Services\UsersDataManager;
 use Mockery;
 use Tests\TestCase;
 
-class UsersManagerTest extends TestCase
+class UsersDataManagerTest extends TestCase
 {
     /**
      * @test
      */
-    public function getUserByIdTest()
+    public function userDataProviderTest()
     {
         $mockery = new Mockery();
         $apiClient = $mockery->mock(APIClient::class);
