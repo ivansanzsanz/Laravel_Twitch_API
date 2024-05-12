@@ -45,7 +45,6 @@ class UsersManager
             'Authorization: Bearer ' . $this->token,
         );
 
-
         $response = $this->apiClient->makeCurlCall($url, $header);
 
         //dd($response);

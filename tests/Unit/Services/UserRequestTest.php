@@ -21,7 +21,7 @@ class UserRequestTest extends TestCase
 
         $validatorFactory = app(ValidatorFactory::class);
 
-        $validator = $validatorFactory->make([], $user_req->rules()); // Simulamos envío sin ID
+        $validator = $validatorFactory->make([], $user_req->rules());
 
         $this->assertFalse($validator->passes());
         $this->assertTrue($validator->fails());

@@ -17,7 +17,7 @@ class UsersManagerTest extends TestCase
     {
         $mockery = new Mockery();
         $apiClient = $mockery->mock(ApiClient::class);
-        $databaseClient = $mockery->mock(DatabaseClient::class);
+        $databaseClientMocker = $mockery->mock(DatabaseClient::class);
         $tokenExpected = json_encode([
             'access_token' => 'u308tesk7yzmi8fe7el28e46dad3a5',
             'expires_in' => 5175216,
@@ -36,7 +36,7 @@ class UsersManagerTest extends TestCase
             'created_at' => '05-05-2024'
         ]]]);
 
-        $databaseClient
+        $databaseClientMocker
             ->expects('getUserFromDatabase')
             ->with('123456789')
             ->once()
@@ -54,7 +54,7 @@ class UsersManagerTest extends TestCase
             )
             ->once()
             ->andReturn($userExpected);
-        $databaseClient
+        $databaseClientMocker
             ->expects('insertUserInDatabase')
             ->with(array('data' => [[
                 'id' => '123456789',
@@ -70,10 +70,10 @@ class UsersManagerTest extends TestCase
             ]]))
             ->once();
 
-        $usersManager = new UsersManager($apiClient, $databaseClient);
-        $result = $usersManager->getUserById('123456789');
+        $usersManager = new UsersManager($apiClient, $databaseClientMocker);
+        $userByIdResult = $usersManager->getUserById('123456789');
 
-        $this->assertEquals($result, array('data' => [[
+        $this->assertEquals($userByIdResult, array('data' => [[
             'id' => '123456789',
             'login' => 'login',
             'display_name' => 'display_name',
@@ -94,7 +94,7 @@ class UsersManagerTest extends TestCase
     {
         $mockery = new Mockery();
         $apiClient = $mockery->mock(ApiClient::class);
-        $databaseClient = $mockery->mock(DatabaseClient::class);
+        $databaseClientMocker = $mockery->mock(DatabaseClient::class);
         $tokenExpected = json_encode([
             'access_token' => 'u308tesk7yzmi8fe7el28e46dad3a5',
             'expires_in' => 5175216,
@@ -107,9 +107,9 @@ class UsersManagerTest extends TestCase
             ->once()
             ->andReturn($tokenExpected);
 
-        $usersManager = new UsersManager($apiClient, $databaseClient);
-        $result = $usersManager->getTokenTwitch();
+        $usersManager = new UsersManager($apiClient, $databaseClientMocker);
+        $tokenTwitchResult = $usersManager->getTokenTwitch();
 
-        $this->assertEquals($result, 'u308tesk7yzmi8fe7el28e46dad3a5');
+        $this->assertEquals($tokenTwitchResult, 'u308tesk7yzmi8fe7el28e46dad3a5');
     }
 }
