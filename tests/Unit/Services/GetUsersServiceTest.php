@@ -55,34 +55,3 @@ class GetUsersServiceTest extends TestCase
         ]));
     }
 }
-/*
-    /**
-     * @test
-     */
-    /*public function givenAnUserRequestWithIdReturnsCode400()
-    {
-        $response = $this->get('/analytics/users?id=417603922');
-
-        $response->assertStatus(200);
-    }*/
-
-    /*/**
-     * @test
-     */
-    /*public function givenAnUserRequestWithIdNullReturnsCode400()
-    {
-        $response = $this->get('/analytics/users?id=');
-
-        $response->assertStatus(400);
-    }*/
-
-    /*/**
-     * @test
-     */
-    /*public function givenAnUserRequestWithoutIdReturnsCode400()
-    {
-        $response = $this->get('/analytics/users');
-
-        $response->assertStatus(400);
-    }
-}
