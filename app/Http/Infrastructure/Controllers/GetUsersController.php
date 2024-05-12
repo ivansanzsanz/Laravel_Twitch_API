@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Infrastructure\Controllers;
 
-use App\Http\Validators\UserValidator;
 use App\Services\GetUsersService;
+use App\Validators\UserValidator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

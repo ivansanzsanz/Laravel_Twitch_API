@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Validators;
+namespace App\Validators;
 
 use App\Http\Requests\UsersRequest;
 use Illuminate\Http\JsonResponse;
