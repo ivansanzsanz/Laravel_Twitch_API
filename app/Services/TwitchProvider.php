@@ -6,6 +6,7 @@ class TwitchProvider
 {
     private ApiClient $apiClient;
     private DatabaseClient $databaseClient;
+
     public function __construct(ApiClient $apiClient, DatabaseClient $databaseClient)
     {
         $this->apiClient = $apiClient;
