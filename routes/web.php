@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Infrastructure\Controllers\GetTopsOfTheTopsController;
+use App\Http\Infrastructure\Controllers\GetStreamsController;
+use App\Http\Infrastructure\Controllers\GetUsersController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TopsOfTheTopsController;
-use App\Http\Controllers\UsersController;
-use App\Http\Controllers\StreamsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -11,6 +11,6 @@ Route::get('/', function () {
 
 //Route::get('/analytics/topsofthetops', TopsOfTheTopsController::class);
 
-Route::get('/analytics/users', UsersController::class);
+Route::get('/analytics/users', GetUsersController::class);
 
-Route::get('/analytics/streams', StreamsController::class);
+Route::get('/analytics/streams', GetStreamsController::class);

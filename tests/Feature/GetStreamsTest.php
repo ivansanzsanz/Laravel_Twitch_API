@@ -2,10 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Services\ApiClient;
-use App\Services\StreamsManager;
-use Tests\TestCase;
+use App\Http\Infrastructure\Clients\APIClient;
+use App\Services\StreamsDataManager;
+use App\Services\TwitchProvider;
 use Mockery;
+use Tests\TestCase;
 
 class GetStreamsTest extends TestCase
 {
@@ -14,24 +15,25 @@ class GetStreamsTest extends TestCase
      */
     public function getStreams()
     {
-        $apiClient = Mockery::mock(ApiClient::class);
+        $mockery = new Mockery();
+        $apiClient = $mockery->mock(APIClient::class);
+        $twitchProvider = $mockery->mock(TwitchProvider::class);
         $this->app
-            ->when(StreamsManager::class)
-            ->needs(ApiClient::class)
+            ->when(StreamsDataManager::class)
+            ->needs(APIClient::class)
             ->give(fn() => $apiClient);
-        $tokenExpected = json_encode([
-            'access_token' => 'u308tesk7yzmi8fe7el28e46dad3a5',
-            'expires_in' => 5175216,
-            'token_type' => 'bearer',
-        ]);
+        $this->app
+            ->when(StreamsDataManager::class)
+            ->needs(TwitchProvider::class)
+            ->give(fn() => $twitchProvider);
+        $tokenExpected = 'u308tesk7yzmi8fe7el28e46dad3a5';
         $streamsExpected = json_encode(['data' => [[
             'title' => 'Stream title',
             'user_name' => 'user_name',
         ]]]);
 
-        $apiClient
+        $twitchProvider
             ->expects('getToken')
-            ->with('https://id.twitch.tv/oauth2/token')
             ->once()
             ->andReturn($tokenExpected);
         $apiClient

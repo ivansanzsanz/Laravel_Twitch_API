@@ -9,7 +9,7 @@
         "ext-mysqli": "*",
         "laravel/framework": "^11.1",
         "laravel/tinker": "^2.9",
-      "ext-pdo": "*"
+        "ext-pdo": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

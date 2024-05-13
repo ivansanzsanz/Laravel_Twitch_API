@@ -4,16 +4,16 @@ namespace App\Services;
 
 class GetUsersService
 {
-    private UsersManager $usersManager;
+    private UsersDataManager $usersManager;
 
-    public function __construct(UsersManager $userManager)
+    public function __construct(UsersDataManager $userManager)
     {
         $this->usersManager = $userManager;
     }
 
-    public function execute($userId)
+    public function execute($userId): array
     {
-        $user = $this->usersManager->getUserById($userId);
+        $user = $this->usersManager->userDataProvider($userId);
 
         return $user['data'];
     }
