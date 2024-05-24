@@ -2,16 +2,16 @@
 
 namespace App\Validators;
 
-use App\Http\Requests\UsersRequest;
+use App\Http\Requests\StreamersRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Factory as ValidatorFactory;
 
-class UserValidator
+class StreamerValidator
 {
-    public function validateUserRequest(Request $request): bool
+    public function validateStreamerRequest(Request $request): bool
     {
-        $usersRequest = new UsersRequest();
+        $usersRequest = new StreamersRequest();
         $validatorFactory = app(ValidatorFactory::class);
         if (!$request->query('id')) {
             return false;
@@ -28,7 +28,7 @@ class UserValidator
 
     public function responseValidator(Request $request): JsonResponse
     {
-        $usersRequest = new UsersRequest();
+        $usersRequest = new StreamersRequest();
         $validatorFactory = app(ValidatorFactory::class);
         if (!$request->query('id')) {
             return response()->json([

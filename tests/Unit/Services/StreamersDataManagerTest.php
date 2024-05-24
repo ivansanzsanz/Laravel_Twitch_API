@@ -5,23 +5,23 @@ namespace Services;
 use App\Http\Infrastructure\Clients\APIClient;
 use App\Http\Infrastructure\Clients\DBClient;
 use App\Services\TwitchProvider;
-use App\Services\UsersDataManager;
+use App\Services\StreamersDataManager;
 use Mockery;
 use Tests\TestCase;
 
-class UsersDataManagerTest extends TestCase
+class StreamersDataManagerTest extends TestCase
 {
     /**
      * @test
      */
-    public function userDataProviderTest()
+    public function streamerDataProviderTest()
     {
         $mockery = new Mockery();
         $apiClient = $mockery->mock(APIClient::class);
         $twitchProvider = $mockery->mock(TwitchProvider::class);
         $databaseClientMocker = $mockery->mock(DBClient::class);
         $tokenExpected = 'u308tesk7yzmi8fe7el28e46dad3a5';
-        $userExpected = json_encode(['data' => [[
+        $streamerExpected = json_encode(['data' => [[
             'id' => '123456789',
             'login' => 'login',
             'display_name' => 'display_name',
@@ -35,7 +35,7 @@ class UsersDataManagerTest extends TestCase
         ]]]);
 
         $databaseClientMocker
-            ->expects('getUserFromDatabase')
+            ->expects('getStreamerFromDatabase')
             ->with('123456789')
             ->once()
             ->andReturn(null);
@@ -50,9 +50,9 @@ class UsersDataManagerTest extends TestCase
                 [0 => 'Authorization: Bearer u308tesk7yzmi8fe7el28e46dad3a5']
             )
             ->once()
-            ->andReturn($userExpected);
+            ->andReturn($streamerExpected);
         $databaseClientMocker
-            ->expects('insertUserInDatabase')
+            ->expects('insertStreamerInDatabase')
             ->with(array('data' => [[
                 'id' => '123456789',
                 'login' => 'login',
@@ -67,8 +67,8 @@ class UsersDataManagerTest extends TestCase
             ]]))
             ->once();
 
-        $usersManager = new UsersDataManager($apiClient, $databaseClientMocker, $twitchProvider);
-        $userByIdResult = $usersManager->userDataProvider('123456789');
+        $streamersManager = new StreamersDataManager($apiClient, $databaseClientMocker, $twitchProvider);
+        $userByIdResult = $streamersManager->streamersDataProvider('123456789');
 
         $this->assertEquals($userByIdResult, array('data' => [[
             'id' => '123456789',

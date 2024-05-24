@@ -24,7 +24,7 @@ return new class extends Migration
             $table->dateTime('date');
         });
 
-        Schema::create('users_twitch', function (Blueprint $table) {
+        Schema::create('streamers_twitch', function (Blueprint $table) {
             $table->string('id', 16)->primary();
             $table->string('login', 64)->nullable();
             $table->string('display_name', 64)->nullable();

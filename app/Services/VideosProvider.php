@@ -2,51 +2,46 @@
 
 namespace App\Services;
 
-class VideosService
+use App\Http\Infrastructure\Clients\APIClient;
+
+class VideosProvider
 {
-    public function videos($access_token, $juego)
+    private APIClient $apiClient;
+    private TwitchProvider $twitchProvider;
+
+    public function __construct(APIClient $apiClient, TwitchProvider $twitchProvider)
+    {
+        $this->apiClient = $apiClient;
+        $this->twitchProvider = $twitchProvider;
+    }
+
+    public function getVideos($game)
     {
 
-        $ch3 = curl_init();
+        $url = "https://api.twitch.tv/helix/videos?game_id=" . urlencode($game['id']) . "&sort=views&first=40";
 
-        $url3 = "https://api.twitch.tv/helix/videos?game_id=" . urlencode($juego['id']) . "&sort=views&first=40";
-
-        curl_setopt($ch3, CURLOPT_URL, $url3);
-        curl_setopt($ch3, CURLOPT_HTTPGET, true);
-
-        $client_id = env('CLIENT_ID');
-
-        curl_setopt(
-            $ch3,
-            CURLOPT_HTTPHEADER,
-            array(
-                'Authorization: ' . 'Bearer ' . $access_token,
-                'Client-Id: ' . $client_id
-            )
+        $header = array(
+            'Authorization: Bearer ' . $this->twitchProvider->getToken(),
         );
 
-        curl_setopt($ch3, CURLOPT_RETURNTRANSFER, true);
+        $response = $this->apiClient->makeCurlCall($url, $header);
 
-        $response3 = curl_exec($ch3);
+        $response = json_decode($response, true);
 
-        if (curl_errno($ch3)) {
-            echo 'Error: ' . curl_error($ch3);
+        foreach ($response['data'] as &$videodata) {
+            $videodata['game_id'] = $game['id'];
+            $videodata['game_name'] = $game['name'];
         }
 
-        curl_close($ch3);
+        return $this->getStreamerWithMostViews($response);
+    }
 
-        $response3_decoded = json_decode($response3, true);
-
-        foreach ($response3_decoded['data'] as &$videodata) {
-            $videodata['game_id'] = $juego['id'];
-            $videodata['game_name'] = $juego['name'];
-        }
-
-        $data = $response3_decoded;
+    public function getStreamerWithMostViews($allVideos)
+    {
 
         $result = array();
 
-        foreach ($data['data'] as $video) {
+        foreach ($allVideos['data'] as $video) {
             $game_id = $video['game_id'];
             $game_name = $video['game_name'];
             $user_name = $video['user_name'];

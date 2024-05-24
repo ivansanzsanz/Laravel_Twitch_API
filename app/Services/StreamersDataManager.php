@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Http\Infrastructure\Clients\APIClient;
 use App\Http\Infrastructure\Clients\DBClient;
 
-class UsersDataManager
+class StreamersDataManager
 {
     private APIClient $apiClient;
     private DBClient $databaseClient;
@@ -18,9 +18,9 @@ class UsersDataManager
         $this->twitchProvider = $twitchProvider;
     }
 
-    public function userDataProvider($userId): array
+    public function streamersDataProvider($userId): array
     {
-        $result = $this->databaseClient->getUserFromDatabase($userId);
+        $result = $this->databaseClient->getStreamerFromDatabase($userId);
 
         if ($result !== null) {
             $dataArray = array();
@@ -42,12 +42,12 @@ class UsersDataManager
 
         if (!isset($response['data'])) {
             echo response()->json([
-                'error' => 'No se pueden devolver usuarios en este momento, inténtalo más tarde'
+                'error' => 'No se pueden devolver streamers en este momento, inténtalo más tarde'
             ], 503);
             exit;
         }
 
-        $this->databaseClient->insertUserInDatabase($response);
+        $this->databaseClient->insertStreamerInDatabase($response);
 
         return $response;
     }
