@@ -30,7 +30,7 @@ class GetTopsOfTheTopsController extends Controller
             $time = $this->setTime($request);
             $user = $this->getTopsService->execute($time);
 
-            return $this->dataSerializer->serializeData($user);
+            return $this->dataSerializer->serializeData($user, 200);
         }
 
         return $this->topsValidator->topsOfTheTopsResponseValidator($request);

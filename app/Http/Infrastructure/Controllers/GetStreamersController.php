@@ -30,7 +30,7 @@ class GetStreamersController extends Controller
             $userId = $request->query('id');
             $user = $this->getStreamersService->execute($userId);
 
-            return $this->dataSerializer->serializeData($user);
+            return $this->dataSerializer->serializeData($user, 200);
         }
 
         return $this->streamerValidator->streamerResponseValidator($request);

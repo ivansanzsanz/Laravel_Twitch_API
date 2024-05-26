@@ -176,4 +176,24 @@ class DBClient
         );
         $stmt->execute();
     }
+
+    public function usernameAlreadyExists($username): bool
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM users_twitch WHERE username = ?");
+
+        $stmt->bind_param("s", $username);
+
+        $stmt->execute();
+
+        return ($stmt->get_result()->num_rows > 0);
+    }
+
+    public function insertUser($userdata): void
+    {
+        $stmt = $this->conn->prepare("INSERT INTO users_twitch VALUES (?, ?)");
+
+        $stmt->bind_param("ss", $userdata['username'], $userdata['password']);
+
+        $stmt->execute();
+    }
 }
