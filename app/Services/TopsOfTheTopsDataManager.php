@@ -3,28 +3,33 @@
 namespace App\Services;
 
 use App\Http\Infrastructure\Clients\DBClient;
+use DateTime;
 
 class TopsOfTheTopsDataManager
 {
     private DBClient $databaseClient;
     private TopThreeProvider $topThreeProvider;
     private VideosProvider $videosProvider;
+    private DateTime $currentDateTime;
 
     public function __construct(
         DBClient $databaseClient,
         TopThreeProvider $topThreeProvider,
-        VideosProvider $videosProvider
+        VideosProvider $videosProvider,
+        DateTime $currentDateTime
     ) {
         $this->databaseClient = $databaseClient;
         $this->topThreeProvider = $topThreeProvider;
         $this->videosProvider = $videosProvider;
+        $this->currentDateTime = $currentDateTime;
     }
 
     public function topsOfTheTopsDataProvider($time): array
     {
         $topStreamers = $this->databaseClient->thereIsTopStreamers();
         $response = $this->topThreeProvider->getTopThree();
-        $date = date('Y-m-d H:i:s');
+
+        $date = $this->currentDateTime->format('Y-m-d H:i:s');
 
         $allIds = $this->databaseClient->getAllIds();
 
@@ -36,7 +41,7 @@ class TopsOfTheTopsDataManager
         return $this->processNoTopStreamers($response['data'], $date);
     }
 
-    private function processTopStreamers($games, $streamersInTime, $allIds, $date): array
+    public function processTopStreamers($games, $streamersInTime, $allIds, $date): array
     {
         $finalResult = [];
 
@@ -54,7 +59,7 @@ class TopsOfTheTopsDataManager
         return $finalResult;
     }
 
-    private function processNoTopStreamers($games, $date): array
+    public function processNoTopStreamers($games, $date): array
     {
         $finalResult = [];
 
@@ -67,7 +72,7 @@ class TopsOfTheTopsDataManager
         return $finalResult;
     }
 
-    private function updateOrInsertStreamer($gameNotFoundVideos, $gameId, $allIds, $date): void
+    public function updateOrInsertStreamer($gameNotFoundVideos, $gameId, $allIds, $date): void
     {
         if (in_array($gameId, $allIds)) {
             $this->databaseClient->updateStreamerInTops($gameNotFoundVideos, $date);
@@ -77,7 +82,7 @@ class TopsOfTheTopsDataManager
         $this->databaseClient->insertStreamerInTops($gameNotFoundVideos, $date);
     }
 
-    private function findInTimeStreamer($gameId, $streamersInTime): array|null
+    public function findInTimeStreamer($gameId, $streamersInTime): array|null
     {
         foreach ($streamersInTime as $inTimeStreamer) {
             if ($gameId === $inTimeStreamer['game_id']) {

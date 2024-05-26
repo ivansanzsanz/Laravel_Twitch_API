@@ -12,7 +12,6 @@ class GetStreamersController extends Controller
 {
     private GetStreamersService $getStreamersService;
     private StreamerValidator $streamerValidator;
-
     private DataSerializer $dataSerializer;
 
     public function __construct(
@@ -34,6 +33,6 @@ class GetStreamersController extends Controller
             return $this->dataSerializer->serializeData($user);
         }
 
-        return $this->streamerValidator->responseValidator($request);
+        return $this->streamerValidator->streamerResponseValidator($request);
     }
 }

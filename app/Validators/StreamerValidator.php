@@ -11,7 +11,7 @@ class StreamerValidator
 {
     public function validateStreamerRequest(Request $request): bool
     {
-        $usersRequest = new StreamersRequest();
+        $streamersRequest = new StreamersRequest();
         $validatorFactory = app(ValidatorFactory::class);
         if (!$request->query('id')) {
             return false;
@@ -19,16 +19,16 @@ class StreamerValidator
         $data = array(
             'id' => $request->query('id'),
         );
-        $validator = $validatorFactory->make($data, $usersRequest->rules());
+        $validator = $validatorFactory->make($data, $streamersRequest->rules());
         if ($validator->fails()) {
             return false;
         }
         return true;
     }
 
-    public function responseValidator(Request $request): JsonResponse
+    public function streamerResponseValidator(Request $request): JsonResponse
     {
-        $usersRequest = new StreamersRequest();
+        $streamersRequest = new StreamersRequest();
         $validatorFactory = app(ValidatorFactory::class);
         if (!$request->query('id')) {
             return response()->json([
@@ -38,7 +38,7 @@ class StreamerValidator
         $data = array(
             'id' => $request->query('id'),
         );
-        $validator = $validatorFactory->make($data, $usersRequest->rules());
+        $validator = $validatorFactory->make($data, $streamersRequest->rules());
         if ($validator->fails()) {
             return response()->json([
                 'error' => 'id no es numerica en la URL'
