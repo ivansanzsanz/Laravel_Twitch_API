@@ -30,14 +30,15 @@ class CreateUsersController
         if ($this->userValidator->validateUserRequest($request)) {
             try {
                 $userData = $request->only(['username', 'password']);
+
                 $username = $this->createUsersService->execute($userData);
 
                 return $this->dataSerializer->serializeData([
                     'username' => $username,
                     'message' => 'Usuario creado correctamente'
                 ], 201);
-            } catch (Exception $e) {
-                if ($e->getMessage() === 'Username already exists') {
+            } catch (Exception $exception) {
+                if ($exception->getMessage() === 'Username already exists') {
                     return response()->json(['error' => 'El nombre de usuario ya está en uso'], 409);
                 }
                 return response()->json(['error' => 'Error del servidor al crear el usuario'], 500);
