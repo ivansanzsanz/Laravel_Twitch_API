@@ -3,50 +3,35 @@
 namespace Requests;
 
 use App\Http\Requests\StreamersRequest;
+use App\Http\Requests\TopsOfTheTopsRequest;
 use Illuminate\Validation\Factory as ValidatorFactory;
 use Tests\TestCase;
 
 class TopsOfTheTopsRequestTest extends TestCase
 {
     /** @test */
-
-    public function idIsRequired()
+    public function sinceMustBeAnInteger()
     {
-        $streamer_req = new StreamersRequest();
+        $topsOfTheTopsRequest = new TopsOfTheTopsRequest();
 
         $validatorFactory = app(ValidatorFactory::class);
 
-        $validator = $validatorFactory->make([], $streamer_req->rules());
+        $validator = $validatorFactory->make(['since' => 'abc'], $topsOfTheTopsRequest->rules());
 
         $this->assertFalse($validator->passes());
         $this->assertTrue($validator->fails());
-        $this->assertArrayHasKey('id', $validator->errors()->messages());
-        $this->assertEquals('The id field is required.', $validator->errors()->first('id'));
-    }
-
-    /** @test */
-    public function idMustBeAnInteger()
-    {
-        $streamer_req = new StreamersRequest();
-
-        $validatorFactory = app(ValidatorFactory::class);
-
-        $validator = $validatorFactory->make(['id' => 'abc'], $streamer_req->rules());
-
-        $this->assertFalse($validator->passes());
-        $this->assertTrue($validator->fails());
-        $this->assertArrayHasKey('id', $validator->errors()->messages());
-        $this->assertEquals('The id field must be an integer.', $validator->errors()->first('id'));
+        $this->assertArrayHasKey('since', $validator->errors()->messages());
+        $this->assertEquals('The since field must be an integer.', $validator->errors()->first('since'));
     }
 
     /** @test */
     public function validIdPassesValidation()
     {
-        $streamer_req = new StreamersRequest();
+        $topsOfTheTopsRequest = new TopsOfTheTopsRequest();
 
         $validatorFactory = app(ValidatorFactory::class);
 
-        $validator = $validatorFactory->make(['id' => '417603922'], $streamer_req->rules());
+        $validator = $validatorFactory->make(['since' => 100], $topsOfTheTopsRequest->rules());
 
         $this->assertTrue($validator->passes());
         $this->assertFalse($validator->fails());
