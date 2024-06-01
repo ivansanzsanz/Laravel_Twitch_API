@@ -16,7 +16,7 @@ class FollowsDataManager
     /**
      * @throws Exception
      */
-    public function followsDataProvider($user_id, $streamer_id): string
+    public function followDataProvider($user_id, $streamer_id): string
     {
         if ($this->databaseClient->userAlreadyFollowsStreamer($user_id, $streamer_id)) {
             throw new Exception('User already follows streamer');
@@ -26,4 +26,15 @@ class FollowsDataManager
 
         return "Ahora sigues a : $streamer_id";
     }
+
+//    public function unfollowDataProvider($user_id, $streamer_id): string
+//    {
+//        if ($this->databaseClient->userAlreadyFollowsStreamer($user_id, $streamer_id)) {
+//            throw new Exception('User already follows streamer');
+//        }
+//
+//        $this->databaseClient->insertFollow($user_id, $streamer_id);
+//
+//        return "Ahora sigues a : $streamer_id";
+//    }
 }
