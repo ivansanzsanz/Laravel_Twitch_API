@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Infrastructure\Controllers\FollowStreamerController;
 use App\Http\Infrastructure\Controllers\GetTopsOfTheTopsController;
 use App\Http\Infrastructure\Controllers\GetStreamsController;
 use App\Http\Infrastructure\Controllers\GetStreamersController;
@@ -17,3 +18,5 @@ Route::get('/analytics/streamers', GetStreamersController::class);
 Route::get('/analytics/streams', GetStreamsController::class);
 
 Route::post('/analytics/users', CreateUsersController::class);
+
+Route::get('/analytics/follow', FollowStreamerController::class);

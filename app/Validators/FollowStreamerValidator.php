@@ -2,12 +2,16 @@
 
 namespace App\Validators;
 
-use http\Env\Request;
+use App\Http\Requests\FollowRequest;
+use App\Http\Requests\UsersRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Factory as ValidatorFactory;
 
 class FollowStreamerValidator
 {
 
-    public function validateFollowRequest(Request $request): bool
+    public function validateFollowRequest(FollowRequest $request): bool
     {
         if (!$request->only(['user_id', 'streamer_id'])) {
             return false;

@@ -2,6 +2,12 @@
 
 namespace App\Http\Infrastructure\Controllers;
 
+use App\Serializers\DataSerializer;
+use App\Services\FollowStreamerService;
+use App\Validators\FollowStreamerValidator;
+use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 class FollowStreamerController
 {
 
