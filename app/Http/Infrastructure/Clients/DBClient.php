@@ -190,9 +190,29 @@ class DBClient
 
     public function insertUser($userdata): void
     {
-        $stmt = $this->conn->prepare("INSERT INTO users_twitch VALUES (?, ?)");
+        $stmt = $this->conn->prepare("INSERT INTO users_twitch (username, password) VALUES (?, ?)");
 
         $stmt->bind_param("ss", $userdata['username'], $userdata['password']);
+
+        $stmt->execute();
+    }
+
+    public function userAlreadyFollowsStreamer($userId, $streamerId): bool
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM user_follows WHERE user_id = ? AND streamer_id = ?");
+
+        $stmt->bind_param("is", $userId, $streamerId);
+
+        $stmt->execute();
+
+        return ($stmt->get_result()->num_rows > 0);
+    }
+
+    public function insertFollow($userId, $streamerId): void
+    {
+        $stmt = $this->conn->prepare("INSERT INTO user_follows VALUES (?, ?)");
+
+        $stmt->bind_param("is", $userId, $streamerId);
 
         $stmt->execute();
     }

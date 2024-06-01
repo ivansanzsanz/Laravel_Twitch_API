@@ -51,11 +51,23 @@ return new class extends Migration
 
         if (!Schema::hasTable('users_twitch')) {
             Schema::create('users_twitch', function (Blueprint $table) {
+                $table->id('user_id');
                 $table->string('username', 100);
                 $table->string('password', 100);
-                $table->primary('username');
+                $table->primary('user_id');
             });
         }
+
+        if (!Schema::hasTable('user_follows')) {
+            Schema::create('user_follows', function (Blueprint $table) {
+                $table->string('user_id', 100);
+                $table->string('streamer_id', 100);
+                $table->primary(['user_id', 'streamer_id']);
+                $table->foreign('user_id')->references('user_id')->on('users_twitch');
+                $table->foreign('streamer_id')->references('id')->on('streamers_twitch');
+            });
+        }
+
     }
 
     /**
