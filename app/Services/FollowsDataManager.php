@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Infrastructure\Clients\DBClient;
+use Exception;
 
 class FollowsDataManager
 {

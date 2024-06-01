@@ -8,7 +8,7 @@ class FollowStreamerService
 
     public function __construct(FollowsDataManager $followsDataManager)
     {
-        $this->$followsDataManager = $followsDataManager;
+        $this->followsDataManager = $followsDataManager;
     }
 
     /**
@@ -16,6 +16,6 @@ class FollowStreamerService
      */
     public function execute($user_id, $streamer_id): string
     {
-        return $this->usersDataManager->usersDataProvider($user_id, $streamer_id);
+        return $this->followsDataManager->followDataProvider($user_id, $streamer_id);
     }
 }

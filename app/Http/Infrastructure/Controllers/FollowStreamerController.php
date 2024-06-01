@@ -27,7 +27,7 @@ class FollowStreamerController
 
     public function __invoke(Request $request): JsonResponse
     {
-        if ($this->followStreamerValidator->validateFollowStreamerRequest($request)) {
+        if ($this->followStreamerValidator->validateFollowRequest($request)) {
             try {
                 $followData = $request->only(['user_id', 'streamer_id']);
 
