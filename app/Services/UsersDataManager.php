@@ -2,53 +2,29 @@
 
 namespace App\Services;
 
-use App\Http\Infrastructure\Clients\APIClient;
 use App\Http\Infrastructure\Clients\DBClient;
+use Exception;
 
 class UsersDataManager
 {
-    private APIClient $apiClient;
     private DBClient $databaseClient;
-    private TwitchProvider $twitchProvider;
 
-    public function __construct(APIClient $apiClient, DBClient $databaseClient, TwitchProvider $twitchProvider)
+    public function __construct(DBClient $databaseClient)
     {
-        $this->apiClient = $apiClient;
         $this->databaseClient = $databaseClient;
-        $this->twitchProvider = $twitchProvider;
     }
 
-    public function userDataProvider($userId): array
+    /**
+     * @throws Exception
+     */
+    public function usersDataProvider($userData): string
     {
-        $result = $this->databaseClient->getUserFromDatabase($userId);
-
-        if ($result !== null) {
-            $dataArray = array();
-
-            $dataArray['data'][0] = $result;
-
-            return $dataArray;
+        if ($this->databaseClient->usernameAlreadyExists($userData['username'])) {
+            throw new Exception('Username already exists');
         }
 
-        $url = "https://api.twitch.tv/helix/users?id=" . urlencode($userId);
+        $this->databaseClient->insertUser($userData);
 
-        $header = array(
-            'Authorization: Bearer ' . $this->twitchProvider->getToken(),
-        );
-
-        $response = $this->apiClient->makeCurlCall($url, $header);
-
-        $response = json_decode($response, true);
-
-        if (!isset($response['data'])) {
-            echo response()->json([
-                'error' => 'No se pueden devolver usuarios en este momento, inténtalo más tarde'
-            ], 503);
-            exit;
-        }
-
-        $this->databaseClient->insertUserInDatabase($response);
-
-        return $response;
+        return $userData['username'];
     }
 }
