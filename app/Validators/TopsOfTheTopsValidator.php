@@ -2,7 +2,6 @@
 
 namespace App\Validators;
 
-use App\Http\Requests\StreamersRequest;
 use App\Http\Requests\TopsOfTheTopsRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

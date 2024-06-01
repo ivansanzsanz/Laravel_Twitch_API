@@ -2,9 +2,7 @@
 
 namespace Services;
 
-use App\Services\GetStreamersService;
 use App\Services\GetTopsOfTheTopsService;
-use App\Services\StreamersDataManager;
 use App\Services\TopsOfTheTopsDataManager;
 use Mockery;
 use Tests\TestCase;

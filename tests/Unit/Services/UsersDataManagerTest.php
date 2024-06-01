@@ -4,6 +4,7 @@ namespace Tests\Unit\Services;
 
 use App\Http\Infrastructure\Clients\DBClient;
 use App\Services\UsersDataManager;
+use Exception;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
@@ -11,7 +12,7 @@ class UsersDataManagerTest extends TestCase
 {
     /**
      * @test
-     * @throws \Exception
+     * @throws Exception
      */
     public function userDataProviderTest()
     {

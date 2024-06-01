@@ -2,7 +2,6 @@
 
 namespace Requests;
 
-use App\Http\Requests\StreamersRequest;
 use App\Http\Requests\TopsOfTheTopsRequest;
 use Illuminate\Validation\Factory as ValidatorFactory;
 use Tests\TestCase;
