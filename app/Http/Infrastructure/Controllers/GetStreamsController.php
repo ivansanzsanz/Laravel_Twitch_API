@@ -22,6 +22,6 @@ class GetStreamsController extends Controller
     {
         $streams = $this->getStreamsService->execute();
 
-        return $this->dataSerializer->serializeData($streams);
+        return $this->dataSerializer->serializeData($streams, 200);
     }
 }

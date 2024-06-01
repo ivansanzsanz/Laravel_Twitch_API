@@ -2,12 +2,12 @@
 
 namespace Services;
 
-use App\Services\GetUsersService;
-use App\Services\UsersDataManager;
+use App\Services\GetStreamersService;
+use App\Services\StreamersDataManager;
 use Mockery;
 use Tests\TestCase;
 
-class GetUsersServiceTest extends TestCase
+class GetStreamersServiceTest extends TestCase
 {
     /**
      * @test
@@ -15,8 +15,8 @@ class GetUsersServiceTest extends TestCase
     public function executeTest()
     {
         $mockery = new Mockery();
-        $usersManager = $mockery->mock(UsersDataManager::class);
-        $userExpected = array('data' => [[
+        $streamersDataManager = $mockery->mock(StreamersDataManager::class);
+        $streamerExpected = array('data' => [[
             'id' => '123456789',
             'login' => 'login',
             'display_name' => 'display_name',
@@ -29,14 +29,14 @@ class GetUsersServiceTest extends TestCase
             'created_at' => '05-05-2024'
         ]]);
 
-        $usersManager
-            ->expects('userDataProvider')
+        $streamersDataManager
+            ->expects('streamersDataProvider')
             ->with('123456789')
             ->once()
-            ->andReturn($userExpected);
+            ->andReturn($streamerExpected);
 
-        $getUsersService = new GetUsersService($usersManager);
-        $result = $getUsersService->execute('123456789');
+        $getStreamersService = new GetStreamersService($streamersDataManager);
+        $result = $getStreamersService->execute('123456789');
 
         $this->assertEquals($result, array(['id' => '123456789',
             'login' => 'login',

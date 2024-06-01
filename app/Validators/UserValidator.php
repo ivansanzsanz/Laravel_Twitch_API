@@ -13,12 +13,10 @@ class UserValidator
     {
         $usersRequest = new UsersRequest();
         $validatorFactory = app(ValidatorFactory::class);
-        if (!$request->query('id')) {
+        if (!$request->only(['username', 'password'])) {
             return false;
         }
-        $data = array(
-            'id' => $request->query('id'),
-        );
+        $data = $request->only(['username', 'password']);
         $validator = $validatorFactory->make($data, $usersRequest->rules());
         if ($validator->fails()) {
             return false;
@@ -26,22 +24,21 @@ class UserValidator
         return true;
     }
 
-    public function responseValidator(Request $request): JsonResponse
+    public function userResponseValidator(Request $request): JsonResponse
     {
         $usersRequest = new UsersRequest();
         $validatorFactory = app(ValidatorFactory::class);
-        if (!$request->query('id')) {
+        if (!$request->input('username') || !$request->input('password')) {
             return response()->json([
-                'error' => 'id requerida en la URL'
+                'error' => 'Los parámetros requeridos (username y password) no fueron proporcionados'
             ], 400);
         }
-        $data = array(
-            'id' => $request->query('id'),
-        );
+        $data = $request->only(['username', 'password']);
         $validator = $validatorFactory->make($data, $usersRequest->rules());
+
         if ($validator->fails()) {
             return response()->json([
-                'error' => 'id no es numerica en la URL'
+                'error' => 'Los parámetros requeridos (username y password) deben ser cadenas de texto'
             ], 400);
         }
         return response()->json([

@@ -1,86 +1,42 @@
 <?php
 
-namespace Services;
+namespace Tests\Unit\Services;
 
-use App\Http\Infrastructure\Clients\APIClient;
 use App\Http\Infrastructure\Clients\DBClient;
-use App\Services\TwitchProvider;
 use App\Services\UsersDataManager;
+use Exception;
 use Mockery;
-use Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class UsersDataManagerTest extends TestCase
 {
     /**
      * @test
+     * @throws Exception
      */
     public function userDataProviderTest()
     {
         $mockery = new Mockery();
-        $apiClient = $mockery->mock(APIClient::class);
-        $twitchProvider = $mockery->mock(TwitchProvider::class);
-        $databaseClientMocker = $mockery->mock(DBClient::class);
-        $tokenExpected = 'u308tesk7yzmi8fe7el28e46dad3a5';
-        $userExpected = json_encode(['data' => [[
-            'id' => '123456789',
-            'login' => 'login',
-            'display_name' => 'display_name',
-            'type' => '',
-            'broadcaster_type' => '',
-            'description' => 'description',
-            'profile_image_url' => 'profile_image_url',
-            'offline_image_url' => '',
-            'view_count' => 0,
-            'created_at' => '05-05-2024'
-        ]]]);
+        $databaseClient = $mockery->mock(DBClient::class);
+        $userDataExpected = array(
+            'username' => 'username',
+            'password' => 'password'
+        );
+        $usernameExpected = 'username';
 
-        $databaseClientMocker
-            ->expects('getUserFromDatabase')
-            ->with('123456789')
+        $databaseClient
+            ->expects('usernameAlreadyExists')
+            ->with($usernameExpected)
             ->once()
-            ->andReturn(null);
-        $twitchProvider
-            ->expects('getToken')
-            ->once()
-            ->andReturn($tokenExpected);
-        $apiClient
-            ->expects('makeCurlCall')
-            ->with(
-                'https://api.twitch.tv/helix/users?id=123456789',
-                [0 => 'Authorization: Bearer u308tesk7yzmi8fe7el28e46dad3a5']
-            )
-            ->once()
-            ->andReturn($userExpected);
-        $databaseClientMocker
-            ->expects('insertUserInDatabase')
-            ->with(array('data' => [[
-                'id' => '123456789',
-                'login' => 'login',
-                'display_name' => 'display_name',
-                'type' => '',
-                'broadcaster_type' => '',
-                'description' => 'description',
-                'profile_image_url' => 'profile_image_url',
-                'offline_image_url' => '',
-                'view_count' => 0,
-                'created_at' => '05-05-2024'
-            ]]))
+            ->andReturn(false);
+        $databaseClient
+            ->expects('insertUser')
+            ->with($userDataExpected)
             ->once();
 
-        $usersManager = new UsersDataManager($apiClient, $databaseClientMocker, $twitchProvider);
-        $userByIdResult = $usersManager->userDataProvider('123456789');
+        $usersDataManager = new UsersDataManager($databaseClient);
+        $result = $usersDataManager->usersDataProvider($userDataExpected);
 
-        $this->assertEquals($userByIdResult, array('data' => [[
-            'id' => '123456789',
-            'login' => 'login',
-            'display_name' => 'display_name',
-            'type' => '',
-            'broadcaster_type' => '',
-            'description' => 'description',
-            'profile_image_url' => 'profile_image_url',
-            'offline_image_url' => '',
-            'view_count' => 0,
-            'created_at' => '05-05-2024'
-        ]]));
+        $this->assertEquals($result, $usernameExpected);
     }
 }
