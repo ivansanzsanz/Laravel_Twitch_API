@@ -6,6 +6,7 @@ use App\Http\Infrastructure\Controllers\GetTopsOfTheTopsController;
 use App\Http\Infrastructure\Controllers\GetStreamsController;
 use App\Http\Infrastructure\Controllers\GetStreamersController;
 use App\Http\Infrastructure\Controllers\CreateUsersController;
+use App\Http\Infrastructure\Controllers\GetTimelimeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,3 +24,5 @@ Route::post('/analytics/users', CreateUsersController::class);
 Route::post('/analytics/follow', FollowController::class);
 
 Route::delete('/analytics/unfollow', UnfollowController::class);
+
+Route::delete('/analytics/timeline/', GetTimelimeController::class);
