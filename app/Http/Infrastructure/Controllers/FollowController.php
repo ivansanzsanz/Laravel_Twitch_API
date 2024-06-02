@@ -11,27 +11,27 @@ use Illuminate\Http\Request;
 
 class FollowController
 {
-    private FollowService $followStreamerService;
-    private FollowValidator $followStreamerValidator;
+    private FollowService $followService;
+    private FollowValidator $followValidator;
     private DataSerializer $dataSerializer;
 
     public function __construct(
-        FollowService   $followStreamerService,
-        FollowValidator $followStreamerValidator,
-        DataSerializer  $dataSerializer
+        FollowService $followService,
+        FollowValidator $followValidator,
+        DataSerializer $dataSerializer
     ) {
-        $this->followStreamerService = $followStreamerService;
-        $this->followStreamerValidator = $followStreamerValidator;
+        $this->followService = $followService;
+        $this->followValidator = $followValidator;
         $this->dataSerializer = $dataSerializer;
     }
 
     public function __invoke(Request $request): JsonResponse
     {
-        if ($this->followStreamerValidator->validateFollowRequest($request)) {
+        if ($this->followValidator->validateFollowRequest($request)) {
             try {
                 $followData = $request->only(['user_id', 'streamer_id']);
 
-                $message = $this->followStreamerService->execute($followData['user_id'], $followData['streamer_id']);
+                $message = $this->followService->execute($followData['user_id'], $followData['streamer_id']);
 
                 return $this->dataSerializer->serializeData([
                     'message' => $message
@@ -44,6 +44,6 @@ class FollowController
             }
         }
 
-        return $this->followStreamerValidator->followResponseValidator($request);
+        return $this->followValidator->followResponseValidator($request);
     }
 }

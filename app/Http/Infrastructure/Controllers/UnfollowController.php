@@ -11,15 +11,14 @@ use Illuminate\Http\Request;
 
 class UnfollowController
 {
-
     private UnfollowService $unfollowService;
     private UnfollowValidator $unfollowValidator;
     private DataSerializer $dataSerializer;
 
     public function __construct(
-        UnfollowService   $unfollowService,
+        UnfollowService $unfollowService,
         UnfollowValidator $unfollowValidator,
-        DataSerializer  $dataSerializer
+        DataSerializer $dataSerializer
     ) {
         $this->unfollowService = $unfollowService;
         $this->unfollowValidator = $unfollowValidator;

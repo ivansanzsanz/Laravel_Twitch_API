@@ -40,7 +40,7 @@ class UnfollowValidator
 
         if (!is_numeric($data['user_id']) || !is_string($data['streamer_id'])) {
             return response()->json([
-                'error' => 'Los parámetros requeridos (user_id = int y streamer_id = string) deben ser correctamente tipados'
+                'error' => 'Los parámetros requeridos (user_id = int; streamer_id = string) no tienen el tipo correcto'
             ], 400);
         }
         return response()->json([

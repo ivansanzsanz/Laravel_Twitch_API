@@ -27,6 +27,4 @@ class FollowDataManager
 
         return "Ahora sigues a : $streamer_id";
     }
-
-
 }

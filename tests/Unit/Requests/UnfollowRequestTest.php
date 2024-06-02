@@ -2,16 +2,16 @@
 
 namespace Requests;
 
-use App\Http\Requests\FollowRequest;
-use Tests\TestCase;
+use App\Http\Requests\UnfollowRequest;
 use Illuminate\Validation\Factory as ValidatorFactory;
+use Tests\TestCase;
 
-class FollowRequestTest extends TestCase
+class UnfollowRequestTest extends TestCase
 {
     /** @test */
     public function userIdIsRequired()
     {
-        $follow_req = new FollowRequest();
+        $follow_req = new UnfollowRequest();
 
         $validatorFactory = app(ValidatorFactory::class);
         $validator = $validatorFactory->make([], $follow_req->rules());
@@ -25,7 +25,7 @@ class FollowRequestTest extends TestCase
     /** @test */
     public function streamerIdIsRequired()
     {
-        $follow_req = new FollowRequest();
+        $follow_req = new UnfollowRequest();
 
         $validatorFactory = app(ValidatorFactory::class);
         $validator = $validatorFactory->make([], $follow_req->rules());
@@ -39,7 +39,7 @@ class FollowRequestTest extends TestCase
     /** @test */
     public function userIdMustBeAnInteger()
     {
-        $follow_req = new FollowRequest();
+        $follow_req = new UnfollowRequest();
 
         $validatorFactory = app(ValidatorFactory::class);
         $validator = $validatorFactory->make(['user_id' => 'ivanig'], $follow_req->rules());
@@ -53,7 +53,7 @@ class FollowRequestTest extends TestCase
     /** @test */
     public function streamerIdMustBeAString()
     {
-        $follow_req = new FollowRequest();
+        $follow_req = new UnfollowRequest();
 
         $validatorFactory = app(ValidatorFactory::class);
         $validator = $validatorFactory->make(['streamer_id' => 12345], $follow_req->rules());
@@ -67,7 +67,7 @@ class FollowRequestTest extends TestCase
     /** @test */
     public function validUserIDAndStreamerIDPassesValidation()
     {
-        $follow_req = new FollowRequest();
+        $follow_req = new UnfollowRequest();
 
         $validatorFactory = app(ValidatorFactory::class);
         $validator = $validatorFactory->make(['user_id' => 12345, 'streamer_id' => '1234'], $follow_req->rules());

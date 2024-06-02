@@ -1,22 +1,22 @@
 <?php
 
 use App\Http\Infrastructure\Clients\DBClient;
-use App\Services\FollowDataManager;
+use App\Services\UnfollowDataManager;
 use Tests\TestCase;
 use Mockery;
 
-class FollowTest extends TestCase
+class UnfollowTest extends TestCase
 {
     /**
      * @test
      */
 
-    public function followStreamer()
+    public function unfollowStreamer()
     {
         $mockery = new Mockery();
         $databaseClient = $mockery->mock(DBClient::class);
         $this->app
-            ->when(FollowDataManager::class)
+            ->when(UnfollowDataManager::class)
             ->needs(DBClient::class)
             ->give(fn() => $databaseClient);
 
@@ -28,19 +28,19 @@ class FollowTest extends TestCase
             'streamer_id' => $streamer_id
         );
 
-        $resultExpected = '{"message":"Ahora sigues a : ' . $streamer_id . '"}';
+        $resultExpected = '{"message":"Dejaste de seguir a : ' . $streamer_id . '"}';
 
         $databaseClient
             ->expects('userFollowsStreamer')
             ->with($user_id, $streamer_id)
             ->once()
-            ->andReturn(false);
+            ->andReturn(true);
         $databaseClient
-            ->expects('insertFollow')
+            ->expects('deleteFollow')
             ->with($user_id, $streamer_id)
             ->once();
 
-        $followResponse = $this->post('/analytics/follow', $followData);
+        $followResponse = $this->delete('/analytics/unfollow', $followData);
 
         $followResponse->assertStatus(201);
         $followResponse->assertContent($resultExpected);

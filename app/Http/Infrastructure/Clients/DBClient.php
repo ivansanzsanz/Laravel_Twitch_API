@@ -225,6 +225,4 @@ class DBClient
 
         $stmt->execute();
     }
-
-
 }

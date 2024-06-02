@@ -7,7 +7,6 @@ use Exception;
 
 class UnfollowDataManager
 {
-
     private DBClient $databaseClient;
 
     public function __construct(DBClient $databaseClient)
@@ -28,5 +27,4 @@ class UnfollowDataManager
 
         return "Dejaste de seguir a : $streamer_id";
     }
-
 }

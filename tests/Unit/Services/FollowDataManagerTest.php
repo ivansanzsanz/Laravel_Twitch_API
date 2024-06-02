@@ -8,7 +8,7 @@ use Exception;
 use Mockery;
 use Tests\TestCase;
 
-class FollowsDataManagerTest extends TestCase
+class FollowDataManagerTest extends TestCase
 {
     /**
      * @test
