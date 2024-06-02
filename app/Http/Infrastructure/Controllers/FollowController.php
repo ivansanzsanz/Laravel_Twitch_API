@@ -4,21 +4,21 @@ namespace App\Http\Infrastructure\Controllers;
 
 use App\Serializers\DataSerializer;
 use App\Services\FollowService;
-use App\Validators\FollowStreamerValidator;
+use App\Validators\FollowValidator;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class FollowStreamerController
+class FollowController
 {
     private FollowService $followStreamerService;
-    private FollowStreamerValidator $followStreamerValidator;
+    private FollowValidator $followStreamerValidator;
     private DataSerializer $dataSerializer;
 
     public function __construct(
-        FollowService           $followStreamerService,
-        FollowStreamerValidator $followStreamerValidator,
-        DataSerializer          $dataSerializer
+        FollowService   $followStreamerService,
+        FollowValidator $followStreamerValidator,
+        DataSerializer  $dataSerializer
     ) {
         $this->followStreamerService = $followStreamerService;
         $this->followStreamerValidator = $followStreamerValidator;
@@ -44,6 +44,6 @@ class FollowStreamerController
             }
         }
 
-        return $this->followStreamerValidator->followStreamerResponseValidator($request);
+        return $this->followStreamerValidator->followResponseValidator($request);
     }
 }

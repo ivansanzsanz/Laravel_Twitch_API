@@ -3,12 +3,11 @@
 namespace App\Validators;
 
 use App\Http\Requests\FollowRequest;
-use App\Http\Requests\UsersRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Factory as ValidatorFactory;
 
-class FollowStreamerValidator
+class FollowValidator
 {
     public function validateFollowRequest(Request $request): bool
     {
@@ -27,9 +26,9 @@ class FollowStreamerValidator
         return true;
     }
 
-    public function followStreamerResponseValidator(Request $request): JsonResponse
+    public function followResponseValidator(Request $request): JsonResponse
     {
-        $usersRequest = new UsersRequest();
+        $usersRequest = new FollowRequest();
         $validatorFactory = app(ValidatorFactory::class);
         if (!$request->input('user_id') || !$request->input('streamer_id')) {
             return response()->json([
