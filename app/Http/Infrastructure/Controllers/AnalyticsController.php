@@ -3,24 +3,18 @@
 namespace App\Http\Infrastructure\Controllers;
 
 use App\Models\User;
-use spec\GrumPHP\Linter\Json\JsonLintErrorSpec;
+use Illuminate\Http\Response;
 
 class AnalyticsController extends Controller
 {
-    public function getUserStreamers()
+    public function getUserStreamers(): Response
     {
+        try {
+            $users = User::all();
 
-        $users = User::with('followedStreamers')->get();
-
-        $response = [];
-        foreach ($users as $user) {
-            $userData = [
-                'username' => $user->username,
-                'followedStreamers' => $user->followedStreamers->pluck('name')->toArray(),
-            ];
-            $response[] = $userData;
+            return response()->json($users, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error del servidor al obtener la lista de usuarios.'], 500);
         }
-
-        return response()->json($response, 200);
     }
 }
