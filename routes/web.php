@@ -14,3 +14,5 @@ Route::get('/', function () {
 Route::get('/analytics/users', GetUsersController::class);
 
 Route::get('/analytics/streams', GetStreamsController::class);
+
+Route::get('/analytics/streamers', 'AnalyticsController@getUserStreamers');
