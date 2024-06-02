@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Exception;
+
 class FollowService
 {
     private FollowDataManager $followsDataManager;
