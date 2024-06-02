@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Http\Infrastructure\Clients\DBClient;
 use Exception;
 
-class FollowsDataManager
+class FollowDataManager
 {
     private DBClient $databaseClient;
 
@@ -19,7 +19,7 @@ class FollowsDataManager
      */
     public function followDataProvider($user_id, $streamer_id): string
     {
-        if ($this->databaseClient->userAlreadyFollowsStreamer($user_id, $streamer_id)) {
+        if ($this->databaseClient->userFollowsStreamer($user_id, $streamer_id)) {
             throw new Exception('User already follows streamer');
         }
 
@@ -28,14 +28,5 @@ class FollowsDataManager
         return "Ahora sigues a : $streamer_id";
     }
 
-//    public function unfollowDataProvider($user_id, $streamer_id): string
-//    {
-//        if ($this->databaseClient->userAlreadyFollowsStreamer($user_id, $streamer_id)) {
-//            throw new Exception('User already follows streamer');
-//        }
-//
-//        $this->databaseClient->insertFollow($user_id, $streamer_id);
-//
-//        return "Ahora sigues a : $streamer_id";
-//    }
+
 }

@@ -197,7 +197,7 @@ class DBClient
         $stmt->execute();
     }
 
-    public function userAlreadyFollowsStreamer($userId, $streamerId): bool
+    public function userFollowsStreamer($userId, $streamerId): bool
     {
         $stmt = $this->conn->prepare("SELECT * FROM user_follows WHERE user_id = ? AND streamer_id = ?");
 
@@ -216,4 +216,15 @@ class DBClient
 
         $stmt->execute();
     }
+
+    public function deleteFollow($userId, $streamerId): void
+    {
+        $stmt = $this->conn->prepare("DELETE FROM user_follows WHERE user_id = ? AND streamer_id = ?");
+
+        $stmt->bind_param("is", $userId, $streamerId);
+
+        $stmt->execute();
+    }
+
+
 }

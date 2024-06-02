@@ -3,7 +3,7 @@
 namespace Services;
 
 use App\Http\Infrastructure\Clients\DBClient;
-use App\Services\FollowsDataManager;
+use App\Services\FollowDataManager;
 use Exception;
 use Mockery;
 use Tests\TestCase;
@@ -18,14 +18,14 @@ class FollowsDataManagerTest extends TestCase
     {
         $mockery = new Mockery();
         $databaseClient = $mockery->mock(DBClient::class);
-        $followsDataManager = new FollowsDataManager($databaseClient);
+        $followsDataManager = new FollowDataManager($databaseClient);
 
         $user_id = 1;
         $streamer_id = '2';
 
 
         $databaseClient
-            ->expects('userAlreadyFollowsStreamer')
+            ->expects('userFollowsStreamer')
             ->with($user_id, $streamer_id)
             ->once()
             ->andReturn(false);

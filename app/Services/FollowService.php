@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-class FollowStreamerService
+class FollowService
 {
-    private FollowsDataManager $followsDataManager;
+    private FollowDataManager $followsDataManager;
 
-    public function __construct(FollowsDataManager $followsDataManager)
+    public function __construct(FollowDataManager $followsDataManager)
     {
         $this->followsDataManager = $followsDataManager;
     }
