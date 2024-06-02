@@ -6,11 +6,11 @@ use Exception;
 
 class UnfollowService
 {
-    private FollowDataManager $followsDataManager;
+    private UnfollowDataManager $unfollowDataManager;
 
-    public function __construct(FollowDataManager $followsDataManager)
+    public function __construct(UnfollowDataManager $unfollowDataManager)
     {
-        $this->followsDataManager = $followsDataManager;
+        $this->unfollowDataManager = $unfollowDataManager;
     }
 
     /**
@@ -18,6 +18,6 @@ class UnfollowService
      */
     public function execute($user_id, $streamer_id): string
     {
-        return $this->followsDataManager->unfollowDataProvider($user_id, $streamer_id);
+        return $this->unfollowDataManager->unfollowDataProvider($user_id, $streamer_id);
     }
 }

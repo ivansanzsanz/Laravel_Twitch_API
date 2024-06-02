@@ -45,6 +45,6 @@ class UnfollowController
             }
         }
 
-        return $this->unfollowValidator->followResponseValidator($request);
+        return $this->unfollowValidator->unfollowResponseValidator($request);
     }
 }
