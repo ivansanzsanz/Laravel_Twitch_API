@@ -20,7 +20,6 @@ class FollowRequestTest extends TestCase
         $this->assertTrue($validator->fails());
         $this->assertArrayHasKey('user_id', $validator->errors()->messages());
         $this->assertEquals('The user id field is required.', $validator->errors()->first('user_id'));
-
     }
 
     /** @test */
@@ -35,7 +34,6 @@ class FollowRequestTest extends TestCase
         $this->assertTrue($validator->fails());
         $this->assertArrayHasKey('streamer_id', $validator->errors()->messages());
         $this->assertEquals('The streamer id field is required.', $validator->errors()->first('streamer_id'));
-
     }
 
     /** @test */
@@ -51,7 +49,6 @@ class FollowRequestTest extends TestCase
         echo(json_encode($validator->errors()->messages()) . "\n");
         $this->assertArrayHasKey('user_id', $validator->errors()->messages());
         $this->assertEquals('The user id field must be an integer.', $validator->errors()->first('user_id'));
-
     }
 
     /** @test */
@@ -66,11 +63,11 @@ class FollowRequestTest extends TestCase
         $this->assertTrue($validator->fails());
         $this->assertArrayHasKey('streamer_id', $validator->errors()->messages());
         $this->assertEquals('The streamer id field must be a string.', $validator->errors()->first('streamer_id'));
-
     }
 
     /** @test */
-    public function validUserIDAndStreamerIDPassesValidation(){
+    public function validUserIDAndStreamerIDPassesValidation()
+    {
         $follow_req = new FollowRequest();
 
         $validatorFactory = app(ValidatorFactory::class);
@@ -79,5 +76,4 @@ class FollowRequestTest extends TestCase
         $this->assertTrue($validator->passes());
         $this->assertFalse($validator->fails());
     }
-
 }

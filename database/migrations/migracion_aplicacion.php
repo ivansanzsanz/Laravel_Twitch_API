@@ -67,7 +67,6 @@ return new class extends Migration
                 $table->foreign('streamer_id')->references('id')->on('streamers_twitch');
             });
         }
-
     }
 
     /**

@@ -10,7 +10,6 @@ use Illuminate\Validation\Factory as ValidatorFactory;
 
 class FollowStreamerValidator
 {
-
     public function validateFollowRequest(Request $request): bool
     {
         $followRequest = new FollowRequest();

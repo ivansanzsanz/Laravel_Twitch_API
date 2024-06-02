@@ -8,9 +8,9 @@ use App\Validators\FollowStreamerValidator;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+
 class FollowStreamerController
 {
-
     private FollowStreamerService $followStreamerService;
     private FollowStreamerValidator $followStreamerValidator;
     private DataSerializer $dataSerializer;
