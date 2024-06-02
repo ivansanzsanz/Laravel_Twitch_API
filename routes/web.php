@@ -1,16 +1,16 @@
 <?php
 
+use App\Http\Infrastructure\Controllers\GetTopsOfTheTopsController;
+use App\Http\Infrastructure\Controllers\GetStreamsController;
+use App\Http\Infrastructure\Controllers\GetUsersController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\topsofthetopsController;
-use App\Http\Controllers\usersController;
-use App\Http\Controllers\streamsController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/analytics/topsofthetops', [topsofthetopsController::class, 'topsOfTheTops']);
+//Route::get('/analytics/topsofthetops', TopsOfTheTopsController::class);
 
-Route::get('/analytics/users', [usersController::class, 'users']);
+Route::get('/analytics/users', GetUsersController::class);
 
-Route::get('/analytics/streams', [streamsController::class, 'streams']);
+Route::get('/analytics/streams', GetStreamsController::class);
