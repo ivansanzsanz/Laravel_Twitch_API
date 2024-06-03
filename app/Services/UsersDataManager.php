@@ -22,9 +22,7 @@ class UsersDataManager
         if ($this->databaseClient->usernameAlreadyExists($userData['username'])) {
             throw new Exception('Username already exists');
         }
-
         $this->databaseClient->insertUser($userData);
-
         return $userData['username'];
     }
 }
