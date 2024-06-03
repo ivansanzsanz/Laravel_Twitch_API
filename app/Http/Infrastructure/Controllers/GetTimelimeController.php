@@ -5,6 +5,9 @@ namespace App\Http\Infrastructure\Controllers;
 use App\Serializers\DataSerializer;
 use App\Services\GetTimelineService;
 use App\Validators\TimelineValidator;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Exception;
 
 class GetTimelimeController
 {
@@ -27,18 +30,13 @@ class GetTimelimeController
         if ($this->timelineValidator->validateTimelineRequest($request)) {
             try {
                 $timelineData = $request->only(['userId']);
-
-                $username = $this->getTimelineService->execute($timelineData);
-
-
-
-                return $this->dataSerializer->serializeData([
-                    'username' => $username,
-                    'message' => 'Usuario creado correctamente'
+                $response = $this->getTimelineService->execute($request->query('userId'));
+                return $this->dataSerializer->serializeData([$response[0],
                 ], 201);
             } catch (Exception $exception) {
                 if ($exception->getMessage() === 'User does not exist') {
-                    return response()->json(['error' => "El usuario especificado (".$request->query('userId').") no existe"], 409);
+                    $response = "El usuario especificado (" . $request->query('userId') . ") no existe";
+                    return response()->json(['error' => $response], 409);
                 }
                 return response()->json(['error' => 'Error del servidor al crear el usuario'], 500);
             }

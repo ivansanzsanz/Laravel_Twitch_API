@@ -6,6 +6,7 @@ use App\Http\Requests\TimelineRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Factory as ValidatorFactory;
+
 class TimelineValidator
 {
     public function validateTimelineRequest(Request $request): bool

@@ -25,4 +25,4 @@ Route::post('/analytics/follow', FollowController::class);
 
 Route::delete('/analytics/unfollow', UnfollowController::class);
 
-Route::delete('/analytics/timeline/', GetTimelimeController::class);
+Route::get('/analytics/timeline/', GetTimelimeController::class);

@@ -185,17 +185,14 @@ class DBClient
         $stmt->bind_param("s", $username);
 
         $stmt->execute();
-
         return ($stmt->get_result()->num_rows > 0);
     }
     public function userIdAlreadyExists($userId): bool
     {
         $stmt = $this->conn->prepare("SELECT * FROM users_twitch WHERE user_id = ?");
-
         $stmt->bind_param("s", $userId);
 
         $stmt->execute();
-
         return ($stmt->get_result()->num_rows > 0);
     }
     public function usersFollowedByUserID($userId): array
@@ -207,11 +204,10 @@ class DBClient
         $stmt->execute();
 
         $result = $stmt->get_result();
-
         $followedStreamers = array();
 
         while ($line = $result->fetch_assoc()) {
-                $followedStreamers[] = $line;
+                $followedStreamers[] = $line['streamer_id'];
         }
         return $followedStreamers;
     }

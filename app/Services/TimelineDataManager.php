@@ -4,29 +4,26 @@ namespace App\Services;
 
 use App\Http\Infrastructure\Clients\APIClient;
 use App\Http\Infrastructure\Clients\DBClient;
+use Exception;
 
 class TimelineDataManager
 {
-    private APIClient $apiClient;
     private DBClient $databaseClient;
     private TwitchProvider $twitchProvider;
-    public function __construct(APIClient $apiClient, DBClient $databaseClient, TwitchProvider $twitchProvider)
+    private FiveVideosPerStreamerProvider $fiveVideosProvider;
+    public function __construct(FiveVideosPerStreamerProvider $fiveVideosProvider, DBClient $databaseClient)
     {
-        $this->apiClient = $apiClient;
+        $this->fiveVideosProvider = $fiveVideosProvider;
         $this->databaseClient = $databaseClient;
-        $this->twitchProvider = $twitchProvider;
     }
 
-    public function timelineDataProvider($userData): string
+    public function timelineDataProvider($userData): array
     {
         if (!$this->databaseClient->userIdAlreadyExists($userData)) {
             throw new Exception('User does not exist')  ;
         }
-        $this->databaseClient->usersFollowedByUserID($userData);
-
-        $this->databaseClient->insertUser($userData);
-
-        return $userData['username'];
+        $followedStreamers = $this->databaseClient->usersFollowedByUserID($userData);
+        $videosFollowed = $this->fiveVideosProvider->getFiveVideosPerStreamer($followedStreamers);
+        return $videosFollowed;
     }
-
 }
