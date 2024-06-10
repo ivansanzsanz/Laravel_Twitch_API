@@ -2,21 +2,21 @@
 
 namespace Requests;
 
-use App\Http\Requests\UsersRequest;
+use App\Http\Requests\StreamersRequest;
 use Illuminate\Validation\Factory as ValidatorFactory;
 use Tests\TestCase;
 
-class UserRequestTest extends TestCase
+class StreamersRequestTest extends TestCase
 {
     /** @test */
 
     public function idIsRequired()
     {
-        $user_req = new UsersRequest();
+        $streamer_req = new StreamersRequest();
 
         $validatorFactory = app(ValidatorFactory::class);
 
-        $validator = $validatorFactory->make([], $user_req->rules());
+        $validator = $validatorFactory->make([], $streamer_req->rules());
 
         $this->assertFalse($validator->passes());
         $this->assertTrue($validator->fails());
@@ -27,11 +27,11 @@ class UserRequestTest extends TestCase
     /** @test */
     public function idMustBeAnInteger()
     {
-        $user_req = new UsersRequest();
+        $streamer_req = new StreamersRequest();
 
         $validatorFactory = app(ValidatorFactory::class);
 
-        $validator = $validatorFactory->make(['id' => 'abc'], $user_req->rules());
+        $validator = $validatorFactory->make(['id' => 'abc'], $streamer_req->rules());
 
         $this->assertFalse($validator->passes());
         $this->assertTrue($validator->fails());
@@ -42,11 +42,11 @@ class UserRequestTest extends TestCase
     /** @test */
     public function validIdPassesValidation()
     {
-        $user_req = new UsersRequest();
+        $streamer_req = new StreamersRequest();
 
         $validatorFactory = app(ValidatorFactory::class);
 
-        $validator = $validatorFactory->make(['id' => '417603922'], $user_req->rules());
+        $validator = $validatorFactory->make(['id' => '417603922'], $streamer_req->rules());
 
         $this->assertTrue($validator->passes());
         $this->assertFalse($validator->fails());

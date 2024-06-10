@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UsersRequest extends FormRequest
+class TimelineRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,7 @@ class UsersRequest extends FormRequest
     {
         return [
             //
-            'username' => 'required|string',
-            'password' => 'required|string',
+            'userId' => 'required|string',
         ];
     }
 

@@ -6,8 +6,8 @@ use Illuminate\Http\JsonResponse;
 
 class DataSerializer
 {
-    public function serializeData($data): JsonResponse
+    public function serializeData($data, $status): JsonResponse
     {
-        return response()->json($data);
+        return response()->json($data, $status);
     }
 }

@@ -3,10 +3,8 @@
 namespace Services;
 
 use App\Http\Infrastructure\Clients\APIClient;
-use App\Http\Infrastructure\Clients\DBClient;
 use App\Services\StreamsDataManager;
 use App\Services\TwitchProvider;
-use App\Services\UsersDataManager;
 use Mockery;
 use Tests\TestCase;
 

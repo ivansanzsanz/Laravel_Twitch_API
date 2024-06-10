@@ -14,8 +14,8 @@ class DataSerializerTest extends TestCase
     {
         $dataSerializer = new DataSerializer();
 
-        $response = $dataSerializer->serializeData("data");
+        $response = $dataSerializer->serializeData("data", 200);
 
-        $this->assertEquals($response, response()->json("data"));
+        $this->assertEquals($response, response()->json("data", 200));
     }
 }
