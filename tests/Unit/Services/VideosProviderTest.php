@@ -25,10 +25,10 @@ class VideosProviderTest extends TestCase
 
     public function testGetVideos()
     {
-        $game = array([
+        $game = array(
             'id' => '1234',
             'name' => 'Valorant'
-        ]);
+        );
         $apiResponse = [
             'data' => [
                 [
@@ -66,5 +66,46 @@ class VideosProviderTest extends TestCase
         $this->assertEquals('Mixwell', $result['user_name']);
         $this->assertEquals(22627, $result['total_views']);
         $this->assertEquals('Heretics vs Vitality', $result['most_viewed_title']);
+        $this->assertEquals('Valorant', $result['game_name']);
+    }
+    public function testgetStreamerWithMostViews()
+    {
+        $allVideos = [
+            'data' => [
+                [
+                    'game_id' => '1234',
+                    'game_name' => 'Valorant',
+                    'user_name' => 'StarWraith',
+                    'view_count' => 73609,
+                    'duration' => '31h',
+                    'created_at' => '2023-01-01T00:00:00Z',
+                    'title' => 'Valorant hasta no aguantar mas || Ranking up to top 1'
+                ],
+                [
+                    'game_id' => '1234',
+                    'game_name' => 'Valorant',
+                    'user_name' => 'Danikongi',
+                    'view_count' => 750,
+                    'duration' => '2h',
+                    'created_at' => '2023-01-02T00:00:00Z',
+                    'title' => 'Mejorando el KDA y HS rate'
+                ],
+                [
+                    'game_id' => '1234',
+                    'game_name' => 'Valorant',
+                    'user_name' => 'Mixwell',
+                    'view_count' => 22627,
+                    'duration' => '6h',
+                    'created_at' => '2023-01-03T00:00:00Z',
+                    'title' => 'Heretics vs Vitality'
+                ]
+            ]
+        ];
+        $result = $this->videosProvider->getStreamerWithMostViews($allVideos);
+
+        $this->assertEquals('StarWraith', $result['user_name']);
+        $this->assertEquals(73609, $result['total_views']);
+        $this->assertEquals('Valorant hasta no aguantar mas || Ranking up to top 1', $result['most_viewed_title']);
+        $this->assertEquals('Valorant', $result['game_name']);
     }
 }

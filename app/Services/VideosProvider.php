@@ -26,11 +26,10 @@ class VideosProvider
         $response = $this->apiClient->makeCurlCall($url, $header);
 
         $response = json_decode($response, true);
-
         foreach ($response['data'] as &$videodata) {
             $videodata['game_id'] = $game['id'];
             $videodata['game_name'] = $game['name'];
-        }
+        };
 
         return $this->getStreamerWithMostViews($response);
     }
