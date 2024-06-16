@@ -55,11 +55,11 @@ class VideosProviderTest extends TestCase
             ]
         ];
         $this->twitchProvider
-            ->expects('getToken')
+            ->shouldReceive('getToken')
             ->once()
             ->andReturn('tokenFalso');
         $this->apiClient
-            ->expects('makeCurlCall')
+            ->shouldReceive('makeCurlCall')
             ->once()
             ->andReturn(json_encode($apiResponse));
         $result = $this->videosProvider->getVideos($game);
