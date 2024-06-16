@@ -208,7 +208,95 @@ class TopsOfTheTopsDataManagerTest extends TestCase
             $dateExpected
         );
     }
+    /**
+     * @test
+     */
+    public function processNoTopStreamersWithMultipleGames()
+    {
+        $gamesExpected = array([
+            'id' => '123456789',
+            'name' => 'Football Manager',
+        ],
+            [
+                'id' => '7330',
+                'name' => 'Valorant',
+            ]);
+        $dateExpected = date('Y-m-d H:i:s');
+        $videosExpected1 = array([
+            'game_id' => '123456',
+            'game_name' => 'Football Manager',
+            'user_name' => 'Eder',
+            'total_videos' => 1,
+            'total_views' => '7321'
+        ]);
+        $videosExpected2 = array([
+            'game_id' => '7330',
+            'game_name' => 'Valorant',
+            'user_name' => 'Ivan',
+            'total_videos' => 1,
+            'total_views' => '23494'
+        ]);
 
+        $this->videosProvider->shouldReceive('getVideos')
+            ->with($gamesExpected[0])
+            ->andReturn($videosExpected1);
+        $this->videosProvider->shouldReceive('getVideos')
+            ->with($gamesExpected[1])
+            ->andReturn($videosExpected2);
+
+        $this->databaseClient->shouldReceive('insertStreamerInTops')
+            ->with($videosExpected1, $dateExpected)
+            ->once();
+        $this->databaseClient->shouldReceive('insertStreamerInTops')
+            ->with($videosExpected2, $dateExpected)
+            ->once();
+
+        $result = $this->topsDataManager->processNoTopStreamers($gamesExpected, $dateExpected);
+
+        $this->assertEquals([$videosExpected1, $videosExpected2], $result);
+    }
+    /**
+     * @test
+     */
+    public function processNoTopStreamersWithSingleGame()
+    {
+        $gamesExpected = array([
+            'id' => '123456789',
+            'name' => 'Football Manager',
+        ]);
+        $gameExpected = $gamesExpected[0];
+        $dateExpected = date('Y-m-d H:i:s');
+        $videosExpected = array([
+            'game_id' => '123456',
+            'game_name' => 'Football Manager',
+            'user_name' => 'Eder',
+            'total_videos' => 1,
+            'total_views' => '1000000'
+        ]);
+
+        $this->videosProvider->shouldReceive('getVideos')
+            ->with($gameExpected)
+            ->andReturn($videosExpected);
+        $this->databaseClient->shouldReceive('insertStreamerInTops')
+            ->with($videosExpected, $dateExpected)
+            ->once();
+
+        $result = $this->topsDataManager->processNoTopStreamers($gamesExpected, $dateExpected);
+
+        $this->assertEquals($result, [$videosExpected]);
+    }
+    /**
+     * @test
+     */
+    public function processNoTopStreamersWithEmptyGames()
+    {
+        $games = [];
+        $date = $this->currentDateTime->format('Y-m-d H:i:s');
+
+        $result = $this->topsDataManager->processNoTopStreamers($games, $date);
+
+        $this->assertEquals([], $result);
+    }
 
 
 
@@ -333,58 +421,6 @@ class TopsOfTheTopsDataManagerTest extends TestCase
             $allIdsExpected,
             $dateExpected
         );
-
-        $this->assertEquals($result, $topsExpected);
-    }
-
-    /**
-     * @test
-     */
-    public function processNoTopStreamers()
-    {
-        $mockery = new Mockery();
-        $dbClient = $mockery->mock(DBClient::class);
-        $topThreeProvider = $mockery->mock(TopThreeProvider::class);
-        $videosProvider = $mockery->mock(VideosProvider::class);
-        $currentDateTime = new DateTime("2024-05-26 10:55:51");
-        $gamesExpected = array([
-            'id' => '123456789',
-            'name' => 'Football Manager',
-        ]);
-        $gameExpected = $gamesExpected[0];
-        $dateExpected = date('Y-m-d H:i:s');
-        $videosExpected = array([
-            'game_id' => '123456',
-            'game_name' => 'Football Manager',
-            'user_name' => 'User',
-            'total_videos' => 1,
-            'total_views' => '1000000'
-        ]);
-        $topsExpected = array([[
-            "game_id" => "123456",
-            "game_name" => "Football Manager",
-            "user_name" => "User",
-            "total_videos" => 1,
-            "total_views" => "1000000"
-        ]]);
-
-        $videosProvider
-            ->expects('getVideos')
-            ->with($gameExpected)
-            ->once()
-            ->andReturn($videosExpected);
-        $dbClient
-            ->expects('insertStreamerInTops')
-            ->with($videosExpected, $dateExpected)
-            ->once();
-
-        $topsDataManager = new TopsOfTheTopsDataManager(
-            $dbClient,
-            $topThreeProvider,
-            $videosProvider,
-            $currentDateTime
-        );
-        $result = $topsDataManager->processNoTopStreamers($gamesExpected, $dateExpected);
 
         $this->assertEquals($result, $topsExpected);
     }

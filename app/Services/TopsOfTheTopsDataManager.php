@@ -62,7 +62,6 @@ class TopsOfTheTopsDataManager
     public function processNoTopStreamers($games, $date): array
     {
         $finalResult = [];
-
         foreach ($games as $game) {
             $gameVideos = $this->videosProvider->getVideos($game);
             $finalResult[] = $gameVideos;
