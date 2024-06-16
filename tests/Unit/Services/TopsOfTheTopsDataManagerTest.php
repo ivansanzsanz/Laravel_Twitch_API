@@ -15,7 +15,7 @@ class TopsOfTheTopsDataManagerTest extends TestCase
     /**
      * @test
      */
-    public function topsOfTheTopsDataProviderTest()
+    public function topsOfTheTopsDataProvider()
     {
         $mockery = new Mockery();
         $dbClient = $mockery->mock(DBClient::class);
@@ -84,7 +84,7 @@ class TopsOfTheTopsDataManagerTest extends TestCase
     /**
      * @test
      */
-    public function processTopStreamersTest()
+    public function processTopStreamers()
     {
         $mockery = new Mockery();
         $dbClient = $mockery->mock(DBClient::class);
@@ -152,7 +152,7 @@ class TopsOfTheTopsDataManagerTest extends TestCase
     /**
      * @test
      */
-    public function processNoTopStreamersTest()
+    public function processNoTopStreamers()
     {
         $mockery = new Mockery();
         $dbClient = $mockery->mock(DBClient::class);
@@ -204,7 +204,7 @@ class TopsOfTheTopsDataManagerTest extends TestCase
     /**
      * @test
      */
-    public function updateOrInsertStreamerTest()
+    public function updateOrInsertStreamer()
     {
         $mockery = new Mockery();
         $dbClient = $mockery->mock(DBClient::class);
@@ -248,7 +248,7 @@ class TopsOfTheTopsDataManagerTest extends TestCase
     /**
      * @test
      */
-    public function findInTimeStreamerTest()
+    public function findInTimeStreamer()
     {
         $mockery = new Mockery();
         $dbClient = $mockery->mock(DBClient::class);
