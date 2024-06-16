@@ -17,13 +17,13 @@ class TopsOfTheTopsDataManagerTest extends TestCase
     private $videosProvider;
     private $currentDateTime;
     private $topsDataManager;
-
+    private $mockery;
     protected function setUp(): void
     {
-        $mockery = new Mockery();
-        $this->databaseClient = $mockery->mock(DBClient::class);
-        $this->topThreeProvider = $mockery->mock(TopThreeProvider::class);
-        $this->videosProvider = $mockery->mock(VideosProvider::class);
+        $this->mockery = new Mockery();
+        $this->databaseClient = $this->mockery->mock(DBClient::class);
+        $this->topThreeProvider = $this->mockery->mock(TopThreeProvider::class);
+        $this->videosProvider = $this->mockery->mock(VideosProvider::class);
         $this->currentDateTime = new DateTime();
 
         $this->topsDataManager = new TopsOfTheTopsDataManager(
@@ -56,11 +56,16 @@ class TopsOfTheTopsDataManagerTest extends TestCase
             'most_viewed_title' => '500 sobres del futchampios'
         ]);
 
-        $this->databaseClient->shouldReceive('thereIsTopStreamers')->andReturn($topStreamers);
-        $this->topThreeProvider->shouldReceive('getTopThree')->andReturn($topThreeExpected);
-        $this->databaseClient->shouldReceive('getAllIds')->andReturn($allIdsExpected);
-        $this->databaseClient->shouldReceive('getInTimeStreamers')->with($time)->andReturn($streamersInTime);
-        $this->videosProvider->shouldReceive('getVideos')->andReturn($videoResponse);
+        $this->databaseClient->shouldReceive('thereIsTopStreamers')
+            ->andReturn($topStreamers);
+        $this->topThreeProvider->shouldReceive('getTopThree')
+            ->andReturn($topThreeExpected);
+        $this->databaseClient->shouldReceive('getAllIds')
+            ->andReturn($allIdsExpected);
+        $this->databaseClient->shouldReceive('getInTimeStreamers')
+            ->with($time)->andReturn($streamersInTime);
+        $this->videosProvider->shouldReceive('getVideos')
+            ->andReturn($videoResponse);
         $this->databaseClient->shouldReceive('insertStreamerInTops');
 
         $result = $this->topsDataManager->topsOfTheTopsDataProvider($time);
@@ -89,10 +94,14 @@ class TopsOfTheTopsDataManagerTest extends TestCase
             'most_viewed_title' => '500 sobres del futchampios'
         ]);
 
-        $this->databaseClient->shouldReceive('thereIsTopStreamers')->andReturn($topStreamers);
-        $this->topThreeProvider->shouldReceive('getTopThree')->andReturn($topThreeExpected);
-        $this->databaseClient->shouldReceive('getAllIds')->andReturn($allIdsExpected);
-        $this->videosProvider->shouldReceive('getVideos')->andReturn($videoResponse);
+        $this->databaseClient->shouldReceive('thereIsTopStreamers')
+            ->andReturn($topStreamers);
+        $this->topThreeProvider->shouldReceive('getTopThree')
+            ->andReturn($topThreeExpected);
+        $this->databaseClient->shouldReceive('getAllIds')
+            ->andReturn($allIdsExpected);
+        $this->videosProvider->shouldReceive('getVideos')
+            ->andReturn($videoResponse);
         $this->databaseClient->shouldReceive('insertStreamerInTops');
 
         $result = $this->topsDataManager->topsOfTheTopsDataProvider($time);
@@ -290,138 +299,107 @@ class TopsOfTheTopsDataManagerTest extends TestCase
      */
     public function processNoTopStreamersWithEmptyGames()
     {
-        $games = [];
-        $date = $this->currentDateTime->format('Y-m-d H:i:s');
+        $gamesExpected = [];
+        $dateExpected = $this->currentDateTime->format('Y-m-d H:i:s');
 
-        $result = $this->topsDataManager->processNoTopStreamers($games, $date);
+        $result = $this->topsDataManager->processNoTopStreamers($gamesExpected, $dateExpected);
 
         $this->assertEquals([], $result);
     }
-
-
-
     /**
      * @test
      */
-    public function topsOfheTopsDataProvider()
+    public function processTopStreamersWithInTimeStreamer()
     {
-        $topThreeExpected = array('data' => [[
-            'id' => '123456789',
-            'name' => 'Football Manager',
-        ]]);
-        $gameExpected = $topThreeExpected['data'][0];
-        $allIdsExpected = array(
-            "123456",
-            "789012",
-            "345678",
-        );
-        $videosExpected = array(
-            'game_id' => '123456',
-            'game_name' => 'Football Manager',
-            'user_name' => 'User',
-            'total_videos' => 1,
-            'total_views' => '1000000'
-        );
-        $dateExpected = $this->currentDateTime->format('Y-m-d H:i:s');
-        $topsExpected = array([
-            "game_id" => "123456",
-            "game_name" => "Football Manager",
-            "user_name" => "User",
-            "total_videos" => 1,
-            "total_views" => "1000000"
-        ]);
-
-        $this->databaseClient
-            ->expects('thereIsTopStreamers')
-            ->once()
-            ->andReturn(false);
-        $this->topThreeProvider
-            ->expects('getTopThree')
-            ->once()
-            ->andReturn($topThreeExpected);
-        $this->databaseClient
-            ->expects('getAllIds')
-            ->once()
-            ->andReturn($allIdsExpected);
-        $this->videosProvider
-            ->expects('getVideos')
-            ->with($gameExpected)
-            ->once()
-            ->andReturn($videosExpected);
-        $this->databaseClient
-            ->expects('insertStreamerInTops')
-            ->with($videosExpected, $dateExpected)
-            ->once();
-        $result = $this->topsDataManager->topsOfTheTopsDataProvider(100);
-
-        $this->assertEquals($result, $topsExpected);
-    }
-
-    /**
-     * @test
-     */
-    public function processTopStreamers()
-    {
-        $mockery = new Mockery();
-        $dbClient = $mockery->mock(DBClient::class);
-        $topThreeProvider = $mockery->mock(TopThreeProvider::class);
-        $videosProvider = $mockery->mock(VideosProvider::class);
-        $currentDateTime = new DateTime("2024-05-26 10:55:51");
         $gamesExpected = array([
-            'id' => '123456789',
-            'name' => 'Football Manager',
+            'id' => '7302',
+            'name' => 'Valorant'
+        ],[
+            'id' => '1234',
+            'name' => 'Fornite'
         ]);
-        $inTimeExpected = array([
-            'game_id' => '123456',
-            'game_name' => 'Football Manager',
-            'user_name' => 'User',
-            'total_videos' => 1,
-            'total_views' => '1000000'
+        $InTimeExpected = array([
+            'game_id' => '1234', 'user_name' => 'WillyRex'
         ]);
-        $allIdsExpected = array(
-            "123456",
-            "789012",
-            "345678",
-        );
-        $dateExpected = date('Y-m-d H:i:s');
-        $videosExpected = array([
-            'game_id' => '123456',
-            'game_name' => 'Football Manager',
-            'user_name' => 'User',
-            'total_videos' => 1,
-            'total_views' => '1000000'
+        $allIdsExpected = ['7302','1234'];
+        $dateExpected = $this->currentDateTime->format('Y-m-d H:i:s');
+        $videoExpected = array([
+            'user_name' => 'Mixwell',
+            'total_views' => 1679532,
+            'most_viewed_title' => 'Consejos para no ser un Paco'
         ]);
-        $topsExpected = array([[
-            "game_id" => "123456",
-            "game_name" => "Football Manager",
-            "user_name" => "User",
-            "total_videos" => 1,
-            "total_views" => "1000000"
-        ]]);
 
-        $videosProvider
-            ->expects('getVideos')
+        $this->videosProvider->shouldReceive('getVideos')
             ->with($gamesExpected[0])
-            ->once()
-            ->andReturn($videosExpected);
-        $dbClient
-            ->expects('insertStreamerInTops')
-            ->with($videosExpected, $dateExpected)
+            ->andReturn($videoExpected);
+
+        $this->databaseClient->shouldReceive('updateStreamerInTops')
             ->once();
 
-        $topsDataManager = new TopsOfTheTopsDataManager(
-            $dbClient,
-            $topThreeProvider,
-            $videosProvider,
-            $currentDateTime
-        );
-        $result = $topsDataManager->processTopStreamers(
+        $result = $this->topsDataManager->processTopStreamers(
             $gamesExpected,
-            $inTimeExpected,
+            $InTimeExpected,
             $allIdsExpected,
             $dateExpected
         );
 
-        $this->assertEquals($result, $topsExpected);
+        $responseExpected = [
+            $videoExpected,
+            $InTimeExpected[0],
+        ];
+        $this->assertEquals($responseExpected, $result);
+    }
+    /**
+     * @test
+     */
+    public function processTopStreamersWithoutInTimeStreamer()
+    {
+        $gamesExpected = array([
+            'id' => '7302',
+            'name' => 'Valorant'
+        ]);
+        $InTimeExpected = [];
+        $allIdsExpected = ['7302'];
+        $dateExpected = $this->currentDateTime->format('Y-m-d H:i:s');
+        $videoExpected = array([
+            'user_name' => 'Mixwell',
+            'total_views' => 1679532,
+            'most_viewed_title' => 'Consejos para no ser un Paco'
+        ]);
+
+        $this->videosProvider->shouldReceive('getVideos')
+            ->with($gamesExpected[0])
+            ->andReturn($videoExpected);
+
+        $this->databaseClient->shouldReceive('updateStreamerInTops')
+            ->once();
+
+        $result = $this->topsDataManager->processTopStreamers(
+            $gamesExpected,
+            $InTimeExpected,
+            $allIdsExpected,
+            $dateExpected
+        );
+
+        $this->assertEquals([$videoExpected], $result);
+    }
+    /**
+     * @test
+     */
+    public function processTopStreamersWithEmptyGames()
+    {
+        $gamesExpected = [];
+        $InTimeExpected = [];
+        $allIdsExpected = [];
+        $dateExpected = $this->currentDateTime->format('Y-m-d H:i:s');
+
+        $result = $this->topsDataManager->processTopStreamers(
+            $gamesExpected,
+            $InTimeExpected,
+            $allIdsExpected,
+            $dateExpected
+        );
+
+        $this->assertEquals([], $result);
     }
 }
