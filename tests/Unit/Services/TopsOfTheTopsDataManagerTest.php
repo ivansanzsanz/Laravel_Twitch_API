@@ -102,6 +102,55 @@ class TopsOfTheTopsDataManagerTest extends TestCase
     /**
      * @test
      */
+    public function findInTimeStreamerWhenExistStremersInTimeAndHaveSameGameId()
+    {
+        $gameIdExpected = '123456';
+        $inTimeExpected = array([
+            'game_id' => '123456',
+            'game_name' => 'Football Manager',
+            'user_name' => 'Eder',
+            'total_videos' => 1,
+            'total_views' => '1000000'
+        ]);
+        $streamerExpected = $inTimeExpected[0];
+
+        $result = $this->topsDataManager->findInTimeStreamer($gameIdExpected, $inTimeExpected);
+
+        $this->assertEquals($result, $streamerExpected);
+    }
+    /**
+     * @test
+     */
+    public function findInTimeStreamerWhenExistStremersInTimeAndNotHaveSameGameId()
+    {
+        $gameIdExpected = '1234567';
+        $inTimeExpected = array([
+            'game_id' => '123456',
+            'game_name' => 'Football Manager',
+            'user_name' => 'Eder',
+            'total_videos' => 1,
+            'total_views' => '1000000'
+        ]);
+
+        $result = $this->topsDataManager->findInTimeStreamer($gameIdExpected, $inTimeExpected);
+
+        $this->assertEquals($result, null);
+    }
+    /**
+     * @test
+     */
+    public function findInTimeStreamerWhenNotExistStremersInTime()
+    {
+        $gameIdExpected = '1234567';
+        $inTimeExpected = [];
+
+        $result = $this->topsDataManager->findInTimeStreamer($gameIdExpected, $inTimeExpected);
+
+        $this->assertEquals($result, null);
+    }
+    /**
+     * @test
+     */
     public function topsOfheTopsDataProvider()
     {
         $topThreeExpected = array('data' => [[
@@ -318,36 +367,5 @@ class TopsOfTheTopsDataManagerTest extends TestCase
             $allIdsExpected,
             $dateExpected
         );
-    }
-
-    /**
-     * @test
-     */
-    public function findInTimeStreamer()
-    {
-        $mockery = new Mockery();
-        $dbClient = $mockery->mock(DBClient::class);
-        $topThreeProvider = $mockery->mock(TopThreeProvider::class);
-        $videosProvider = $mockery->mock(VideosProvider::class);
-        $currentDateTime = new DateTime("2024-05-26 10:55:51");
-        $gameIdExpected = '123456';
-        $inTimeExpected = array([
-            'game_id' => '123456',
-            'game_name' => 'Football Manager',
-            'user_name' => 'User',
-            'total_videos' => 1,
-            'total_views' => '1000000'
-        ]);
-        $streamerExpected = $inTimeExpected[0];
-
-        $topsDataManager = new TopsOfTheTopsDataManager(
-            $dbClient,
-            $topThreeProvider,
-            $videosProvider,
-            $currentDateTime
-        );
-        $result = $topsDataManager->findInTimeStreamer($gameIdExpected, $inTimeExpected);
-
-        $this->assertEquals($result, $streamerExpected);
     }
 }
