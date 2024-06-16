@@ -19,3 +19,6 @@ grumphp:
       standard: PSR12
     phpmd:
       ruleset: ['cleancode', 'naming']
+    phpunit:
+      config_file: phpunit.xml
+      always_execute: false
