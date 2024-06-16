@@ -151,6 +151,70 @@ class TopsOfTheTopsDataManagerTest extends TestCase
     /**
      * @test
      */
+    public function updateOrInsertStreamerUpdaters()
+    {
+        $gameNoVideosExpected = array([
+            'game_id' => '123456',
+            'game_name' => 'Football Manager',
+            'user_name' => 'Eder',
+            'total_videos' => 1,
+            'total_views' => '1000000'
+        ]);
+        $gameIdExpected = '123456';
+        $allIdsExpected = array(
+            "123456",
+            "789012",
+            "345678",
+        );
+        $dateExpected = date('Y-m-d H:i:s');
+
+        $this->databaseClient->shouldReceive('updateStreamerInTops')
+            ->once()
+            ->with($gameNoVideosExpected, $dateExpected);
+        $this->topsDataManager->updateOrInsertStreamer(
+            $gameNoVideosExpected,
+            $gameIdExpected,
+            $allIdsExpected,
+            $dateExpected
+        );
+    }
+    /**
+     * @test
+     */
+    public function updateOrInsertStreamerIserts()
+    {
+        $gameNoVideosExpected = array([
+            'game_id' => '123456',
+            'game_name' => 'Football Manager',
+            'user_name' => 'Eder',
+            'total_videos' => 1,
+            'total_views' => '1000000'
+        ]);
+        $gameIdExpected = '1234567';
+        $allIdsExpected = array(
+            "123456",
+            "789012",
+            "345678",
+        );
+        $dateExpected = date('Y-m-d H:i:s');
+
+        $this->databaseClient->shouldReceive('insertStreamerInTops')
+            ->once()
+            ->with($gameNoVideosExpected, $dateExpected);
+        $this->topsDataManager->updateOrInsertStreamer(
+            $gameNoVideosExpected,
+            $gameIdExpected,
+            $allIdsExpected,
+            $dateExpected
+        );
+    }
+
+
+
+
+    /**
+     * @test
+     */
     public function topsOfheTopsDataProvider()
     {
         $topThreeExpected = array('data' => [[
@@ -323,49 +387,5 @@ class TopsOfTheTopsDataManagerTest extends TestCase
         $result = $topsDataManager->processNoTopStreamers($gamesExpected, $dateExpected);
 
         $this->assertEquals($result, $topsExpected);
-    }
-
-    /**
-     * @test
-     */
-    public function updateOrInsertStreamer()
-    {
-        $mockery = new Mockery();
-        $dbClient = $mockery->mock(DBClient::class);
-        $topThreeProvider = $mockery->mock(TopThreeProvider::class);
-        $videosProvider = $mockery->mock(VideosProvider::class);
-        $currentDateTime = new DateTime("2024-05-26 10:55:51");
-        $gameNoVideosExpected = array([
-            'game_id' => '123456',
-            'game_name' => 'Football Manager',
-            'user_name' => 'User',
-            'total_videos' => 1,
-            'total_views' => '1000000'
-        ]);
-        $gameIdExpected = '123456';
-        $allIdsExpected = array(
-            "123456",
-            "789012",
-            "345678",
-        );
-        $dateExpected = date('Y-m-d H:i:s');
-
-        $dbClient
-            ->expects('updateStreamerInTops')
-            ->with($gameNoVideosExpected, $dateExpected)
-            ->once();
-
-        $topsDataManager = new TopsOfTheTopsDataManager(
-            $dbClient,
-            $topThreeProvider,
-            $videosProvider,
-            $currentDateTime
-        );
-        $topsDataManager->updateOrInsertStreamer(
-            $gameNoVideosExpected,
-            $gameIdExpected,
-            $allIdsExpected,
-            $dateExpected
-        );
     }
 }
